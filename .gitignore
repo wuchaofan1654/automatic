@@ -18,6 +18,9 @@ lib/
 lib64/
 parts/
 sdist/
+media/
+logs/
+.idea/
 var/
 wheels/
 pip-wheel-metadata/
