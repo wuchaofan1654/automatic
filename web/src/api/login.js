@@ -9,7 +9,7 @@ export function login(username, password, code, uuid) {
     idKeyC: uuid
   };
   return request({
-    url: "/drf/api-auth/login/",
+    url: "/drf/login/",
     method: "post",
     data: data
   });
