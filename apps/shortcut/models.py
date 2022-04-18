@@ -1,41 +1,33 @@
 from django.db import models
 
 # Create your models here.
-from frames.models import BaseModel
+from django.db.models import CharField, IntegerField, ForeignKey, CASCADE
+
+from frames.models import BaseModel, CoreModel
 
 
-class Shortcut(BaseModel):
+class Shortcut(CoreModel):
     name = models.CharField(default='', max_length=100)
     desc = models.IntegerField(default=1)
-    dept = models.IntegerField(default=1)
     module = models.IntegerField(default=1)
     cmd = models.CharField(default='', max_length=100)
-    exe_cnt = models.TextField(default='')
-    curr_page = models.CharField(default='', max_length=100)
-    curr_page_ext = models.TextField(default='')
-    from_action = models.CharField(default='', max_length=100)
-    from_action_ext = models.TextField(default='')
 
     class Meta:
         verbose_name = '标准埋点表'
         verbose_name_plural = verbose_name
 
 
-class PointExtend(BaseModel):
-    ctime = models.IntegerField(default=0)
-    point_type = models.IntegerField(default=1)
-    from_page = models.CharField(default='', max_length=100)
-    from_page_ext = models.TextField(default='')
-    curr_page = models.CharField(default='', max_length=100)
-    curr_page_ext = models.TextField(default='')
-    from_action = models.CharField(default='', max_length=100)
-    from_action_ext = models.TextField(default='')
-    details = models.TextField(default='')
+class Module(CoreModel):
+    moduleName = CharField(max_length=64, verbose_name="部门名称")
+    orderNum = IntegerField(verbose_name="显示排序")
+    owner = CharField(max_length=32, verbose_name="负责人", null=True, blank=True)
+    status = CharField(max_length=8, verbose_name="模块状态", null=True, blank=True)
+    parentId = ForeignKey(to='Module', on_delete=CASCADE, default=False, verbose_name="上级模块",
+                          db_constraint=False, null=True, blank=True)
 
     class Meta:
-        verbose_name = '拦截埋点记录表'
+        verbose_name = '标准埋点表'
         verbose_name_plural = verbose_name
-
 
 
 
