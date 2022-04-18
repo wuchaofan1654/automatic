@@ -6,13 +6,13 @@ from frames.response import SuccessResponse, ErrorResponse
 from apps.permission.permissions import CommonPermission, DeptDestroyPermission
 from frames.filters import DataLevelPermissionsFilter
 from frames.viewsets import CustomModelViewSet
-from apps.permission.filters import MenuFilter, DeptFilter, PostFilter, RoleFilter, UserProfileFilter
-from apps.permission.models import Role, Menu, Dept, Post
+from apps.permission.filters import MenuFilter, DeptFilter, PostFilter, RoleFilter, UserProfileFilter, ModuleFilter
+from apps.permission.models import Role, Menu, Dept, Post, Module
 from apps.permission.serializers import UserProfileSerializer, MenuSerializer, RoleSerializer, \
     MenuCreateUpdateSerializer, DeptSerializer, DeptCreateUpdateSerializer, PostSerializer, PostCreateUpdateSerializer, \
     RoleCreateUpdateSerializer, DeptTreeSerializer, MenuTreeSerializer, UserProfileCreateUpdateSerializer, \
     PostSimpleSerializer, RoleSimpleSerializer, ExportUserProfileSerializer, ExportRoleSerializer, ExportPostSerializer, \
-    UserProfileImportSerializer
+    UserProfileImportSerializer, ModuleSerializer, ModuleTreeSerializer, ModuleCreateUpdateSerializer
 from apps.system.models import DictDetails
 
 UserProfile = get_user_model()
@@ -186,6 +186,37 @@ class DeptModelViewSet(CustomModelViewSet):
             'depts': serializer.data,
             'checkedKeys': dept_queryset
         })
+
+
+class ModuleModelViewSet(CustomModelViewSet):
+    """
+    模块管理 的CRUD视图
+    """
+    queryset = Module.objects.all()
+    serializer_class = ModuleSerializer
+    create_serializer_class = ModuleCreateUpdateSerializer
+    update_serializer_class = ModuleCreateUpdateSerializer
+    filter_class = ModuleFilter
+    # extra_filter_backends = [DataLevelPermissionsFilter]
+    # update_extra_permission_classes = (CommonPermission,)
+    # destroy_extra_permission_classes = (CommonPermission, DestroyPermission)
+    # create_extra_permission_classes = (CommonPermission,)
+    # search_fields = ('',)
+    ordering = 'create_datetime'  # 默认排序
+
+    def tree_select_list(self, request: Request, *args, **kwargs):
+        """
+        递归获取模块树
+        :param request:
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        queryset = self.filter_queryset(self.get_queryset())
+        if hasattr(self, 'handle_logging'):
+            self.handle_logging(request, *args, **kwargs)
+        serializer = MenuTreeSerializer(queryset, many=True)
+        return SuccessResponse(serializer.data)
 
 
 class PostModelViewSet(CustomModelViewSet):

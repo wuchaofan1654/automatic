@@ -1,7 +1,7 @@
 import django_filters
 from django.contrib.auth import get_user_model
 
-from apps.permission.models import Menu, Dept, Post, Role
+from apps.permission.models import Menu, Dept, Post, Role, Module
 from frames.utils.model_util import get_dept
 
 UserProfile = get_user_model()
@@ -27,6 +27,18 @@ class DeptFilter(django_filters.rest_framework.FilterSet):
     class Meta:
         model = Dept
         exclude = ('description', 'creator', 'modifier')
+
+
+class ModuleFilter(django_filters.rest_framework.FilterSet):
+    """
+    模块管理 简单序过滤器
+    """
+    moduleName = django_filters.CharFilter(lookup_expr='icontains')
+    # dept_id = django_filters.CharFilter(field_name='dept.id', lookup_expr='icontains')
+
+    class Meta:
+        model = Module
+        fields = '__all__'
 
 
 class PostFilter(django_filters.rest_framework.FilterSet):
