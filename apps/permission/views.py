@@ -215,7 +215,7 @@ class ModuleModelViewSet(CustomModelViewSet):
         queryset = self.filter_queryset(self.get_queryset())
         if hasattr(self, 'handle_logging'):
             self.handle_logging(request, *args, **kwargs)
-        serializer = MenuTreeSerializer(queryset, many=True)
+        serializer = ModuleTreeSerializer(queryset, many=True)
         return SuccessResponse(serializer.data)
 
 
