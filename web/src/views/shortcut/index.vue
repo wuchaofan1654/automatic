@@ -1,11 +1,37 @@
 <template>
   <div class="app-container">
-    <el-radio-group v-model="count">
-      <el-radio :label="1">1个</el-radio>
-      <el-radio :label="2">2个</el-radio>
-      <el-radio :label="3">3个</el-radio>
-      <el-radio :label="4">4个</el-radio>
-    </el-radio-group>
+    <el-form v-show="showSearch" ref="queryForm" :model="queryParams" :inline="true" label-width="68px">
+      <el-form-item label="名称" prop="title">
+        <el-input
+          v-model="queryParams.title"
+          placeholder="请输入名称"
+          clearable
+          size="small"
+          style="width: 240px"
+          @keyup.enter.native="handleQuery"/>
+      </el-form-item>
+      <el-form-item label="状态" prop="status">
+        <el-select v-model="queryParams.status" placeholder="状态" clearable size="small">
+          <el-option
+            v-for="dict in PointStatusOptions"
+            :key="dict.dictValue"
+            :label="dict.dictLabel"
+            :value="dict.dictValue"/>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-radio-group v-model="count">
+          <el-radio-button label="1个"></el-radio-button>
+          <el-radio-button label="2个"></el-radio-button>
+          <el-radio-button label="3个"></el-radio-button>
+          <el-radio-button label="4个"></el-radio-button>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+      </el-form-item>
+    </el-form>
     <el-row class="class-shortcut-cards">
       <el-col :span="24/count" v-for="shortcut in shortcuts">
         <el-card class="class-shortcut-card" shadow="hover">
@@ -62,7 +88,9 @@ export default {
     return {
       command: 'not found',
       count: 3,
+      showSearch: true,
       dialogVisible: false,
+      queryParams: {},
       shortcuts: [
         {
           name: '描述3描述3描述3描述3描述3描述3描述3描述3描述3描述3描述3描述3描述3描述3描述3描述3描述3描述3描述3描述3描述3描述3描述3描述3描述3',

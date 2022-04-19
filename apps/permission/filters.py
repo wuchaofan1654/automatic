@@ -34,7 +34,6 @@ class ModuleFilter(django_filters.rest_framework.FilterSet):
     模块管理 简单序过滤器
     """
     moduleName = django_filters.CharFilter(lookup_expr='icontains')
-    # dept_id = django_filters.CharFilter(field_name='dept.id', lookup_expr='icontains')
 
     class Meta:
         model = Module
@@ -71,7 +70,8 @@ class UserProfileFilter(django_filters.rest_framework.FilterSet):
     mobile = django_filters.CharFilter(lookup_expr='icontains')
     deptId = django_filters.CharFilter(method='filter_deptId')
 
-    def filter_deptId(self, queryset, name, value):
+    @classmethod
+    def filter_deptId(cls, queryset, name, value):
         return queryset.filter(dept__id__in=get_dept(dept_id=value))
 
     class Meta:
