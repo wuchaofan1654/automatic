@@ -99,10 +99,10 @@
             <el-input v-model="scope.row.expression"></el-input>
           </template>
         </el-table-column>
-        <el-table-column prop="excepted" label="期望值" align="center">
+        <el-table-column prop="excepted" label="期望值" align="center" width="300px">
           <template slot-scope="scope">
             <el-input v-model="scope.row.excepted">
-              <el-select v-model="scope.row.symbol" slot="prepend">
+              <el-select v-model="scope.row.symbol" slot="prepend" style="width: 120px">
                 <el-option v-for="item in symbolOptions" :label="item.label" :value="item.value"/>
               </el-select>
             </el-input>
