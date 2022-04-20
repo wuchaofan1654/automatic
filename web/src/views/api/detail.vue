@@ -99,16 +99,13 @@
             <el-input v-model="scope.row.expression"></el-input>
           </template>
         </el-table-column>
-        <el-table-column prop="symbol" label="比较符" align="center">
-          <template slot-scope="scope">
-            <el-select v-model="scope.row.symbol">
-              <el-option v-for="item in symbolOptions" :label="item.label" :value="item.value"></el-option>
-            </el-select>
-          </template>
-        </el-table-column>
         <el-table-column prop="excepted" label="期望值" align="center">
           <template slot-scope="scope">
-            <el-input v-model="scope.row.excepted"></el-input>
+            <el-input v-model="scope.row.excepted">
+              <el-select v-model="scope.row.symbol" slot="prepend">
+                <el-option v-for="item in symbolOptions" :label="item.label" :value="item.value"/>
+              </el-select>
+            </el-input>
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center">
