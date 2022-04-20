@@ -13,9 +13,6 @@ export default {
 
     if (value && value instanceof Array && value.length > 0) {
       const permissionFlag = value;
-
-      console.log(permissionFlag)
-
       const hasPermissions = permissions.some(permission => {
         return all_permission === permission || permissionFlag.includes(permission);
       });

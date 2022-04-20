@@ -1,20 +1,6 @@
 <template>
   <div class="app-container">
     <el-form ref="detailForm" :model="form" label-width="80px">
-      <el-card class="box-card">
-        <div slot="header" style="height: 32px">
-          基础信息
-          <div style="float: right">
-            <el-button
-              type="warning"
-              @click="resetForm">重置
-            </el-button>
-            <el-button
-              type="success"
-              @click="submitForm">保存
-            </el-button>
-          </div>
-        </div>
         <el-row>
           <el-col :span="8">
             <el-form-item label="接口名称">
@@ -72,154 +58,95 @@
             </el-form-item>
           </el-col>
         </el-row>
-      </el-card>
-      <el-card class="box-card">
-        <div slot="header">
-          参数数据
-          <el-button icon="el-icon-plus" type="text" @click="addParam">新增</el-button>
-          <el-radio-group
-            size="mini"
-            style="float: right"
-            v-model="paramsFormDataYn">
-            <el-radio :label="false">key-value</el-radio>
-            <el-radio :label="true">form-data</el-radio>
-          </el-radio-group>
-        </div>
-        <div v-if="!paramsFormDataYn">
-          <el-row>
-            <el-col :span="4" class="dynamic-title">
-              <span>参数类型</span>
-            </el-col>
-            <el-col :span="6" class="dynamic-title">
-              <span>参数key</span>
-            </el-col>
-            <el-col :span="6" class="dynamic-title">
-              <span>参数value</span>
-            </el-col>
-          </el-row>
-          <el-row v-for="param in form.params">
-            <el-col :span="4" class="dynamic-body">
-              <el-select v-model="param.type">
+      <el-table :data="form.params">
+        <el-table-column prop="type" label="参数类型">
+          <template slot-scope="scope">
+            <el-select v-model="scope.row.type">
                 <el-option v-for="item in paramTypeOptions" :label="item.label" :value="item.value"></el-option>
               </el-select>
-            </el-col>
-            <el-col :span="6" class="dynamic-body">
-              <el-input v-model="param.key"></el-input>
-            </el-col>
-            <el-col :span="6" class="dynamic-body" style="text-align: center">
-              <el-input v-if="param.type !== 5" v-model="param.value"></el-input>
-              <FileUpload @input="updateParamValue"></FileUpload>
-            </el-col>
-            <el-col :span="4" class="dynamic-body">
-              <el-button-group>
-                <el-button type="text" icon="el-icon-plus" @click="addParam"></el-button>
-                <el-button type="text" icon="el-icon-delete" @click="removeParam(param)"></el-button>
-              </el-button-group>
-            </el-col>
-          </el-row>
-        </div>
-        <el-input v-else type="textarea" v-model="form.params" :rows="6"/>
-      </el-card>
-      <el-card class="box-card">
-        <div slot="header">
-          验证器参数
-          <el-button icon="el-icon-plus" type="text" @click="addValidator">新增</el-button>
-          <el-radio-group
-            style="float: right"
-            v-model="validatorsFormDataYn">
-            <el-radio :label="false">key-value</el-radio>
-            <el-radio :label="true">form-data</el-radio>
-          </el-radio-group>
-        </div>
-        <div v-if="!validatorsFormDataYn">
-          <el-row>
-            <el-col :span="4" class="dynamic-title">
-              <span>表达式类型</span>
-            </el-col>
-            <el-col :span="4" class="dynamic-title">
-              <span class="dynamic-title">表达式</span>
-            </el-col>
-            <el-col :span="4" class="dynamic-title">
-              <span class="dynamic-title">比较符</span>
-            </el-col>
-            <el-col :span="4" class="dynamic-title">
-              <span class="dynamic-title">期望值</span>
-            </el-col>
-          </el-row>
-          <el-row v-for="validator in form.validators">
-            <el-col :span="4" class="dynamic-body">
-              <el-select v-model="validator.expression_type">
+          </template>
+        </el-table-column>
+        <el-table-column prop="key" label="参数key">
+          <template slot-scope="scope">
+            <el-input v-model="scope.row.key"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column prop="value" label="参数value">
+          <template slot-scope="scope">
+            <el-input v-if="scope.row.type !== 5" v-model="scope.row.value"></el-input>
+            <FileUpload @input="updateParamValue"></FileUpload>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-button-group>
+              <el-button type="text" icon="el-icon-plus" @click="addParam"></el-button>
+              <el-button type="text" icon="el-icon-delete" @click="removeParam(scope.row)"></el-button>
+            </el-button-group>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-table :data="form.validators">
+        <el-table-column prop="type" label="验证方式">
+          <template slot-scope="scope">
+            <el-select v-model="scope.row.expression_type">
                 <el-option v-for="item in expressionTypeOptions" :label="item.label" :value="item.value"></el-option>
               </el-select>
-            </el-col>
-            <el-col :span="4" class="dynamic-body">
-              <el-input v-model="validator.expression"></el-input>
-            </el-col>
-            <el-col :span="4" class="dynamic-body">
-              <el-select v-model="validator.symbol">
-                <el-option v-for="item in symbolOptions" :label="item.label" :value="item.value"></el-option>
-              </el-select>
-            </el-col>
-            <el-col :span="4" class="dynamic-body">
-              <el-input v-model="validator.excepted"></el-input>
-            </el-col>
-            <el-col :span="4" class="dynamic-body">
-              <el-button-group>
-                <el-button type="text" icon="el-icon-plus" @click="addValidator"></el-button>
-                <el-button type="text" icon="el-icon-delete" @click="removeValidator(validator)"></el-button>
-              </el-button-group>
-            </el-col>
-          </el-row>
-        </div>
-        <el-input v-else type="textarea" v-model="form.validators" :rows="6"/>
-      </el-card>
-      <el-card class="box-card">
-        <div slot="header">
-          提取器参数
-          <el-button icon="el-icon-plus" type="text" @click="addExtractor">新增</el-button>
-          <el-radio-group
-            style="float: right"
-            v-model="extractorsFormDataYn">
-            <el-radio :label="false">key-value</el-radio>
-            <el-radio :label="true">form-data</el-radio>
-          </el-radio-group>
-        </div>
-        <div v-if="!extractorsFormDataYn">
-          <el-row>
-            <el-col :span="4" class="dynamic-title">
-              <span>表达式类型</span>
-            </el-col>
-            <el-col :span="6" class="dynamic-title">
-              <span>表达式</span>
-            </el-col>
-            <el-col :span="6" class="dynamic-title">
-              <span>赋值参数</span>
-            </el-col>
-          </el-row>
-          <el-row v-for="extractor in form.extractors">
-            <el-col :span="4" class="dynamic-body">
-              <el-select v-model="extractor.expression_type">
+          </template>
+        </el-table-column>
+        <el-table-column prop="expression" label="表达式">
+          <template slot-scope="scope">
+            <el-input v-model="scope.row.expression"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column prop="symbol" label="比较符">
+          <template slot-scope="scope">
+            <el-select v-model="scope.row.symbol">
+              <el-option v-for="item in symbolOptions" :label="item.label" :value="item.value"></el-option>
+            </el-select>
+          </template>
+        </el-table-column>
+        <el-table-column prop="excepted" label="期望值">
+          <template slot-scope="scope">
+            <el-input v-model="scope.row.excepted"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-button-group>
+              <el-button type="text" icon="el-icon-plus" @click="addParam"></el-button>
+              <el-button type="text" icon="el-icon-delete" @click="removeParam(scope.row)"></el-button>
+            </el-button-group>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-table :data="form.extractors">
+        <el-table-column prop="type" label="提取方式">
+          <template slot-scope="scope">
+            <el-select v-model="scope.row.expression_type">
                 <el-option v-for="item in expressionTypeOptions" :label="item.label" :value="item.value"></el-option>
               </el-select>
-            </el-col>
-            <el-col :span="6" class="dynamic-body">
-              <el-input v-model="extractor.variable"></el-input>
-            </el-col>
-            <el-col :span="6" class="dynamic-body">
-              <el-input v-model="extractor.expression"></el-input>
-            </el-col>
-            <el-col :span="4" class="dynamic-body">
-              <el-button-group>
-                <el-button type="text" icon="el-icon-plus" @click="addExtractor"></el-button>
-                <el-button type="text" icon="el-icon-delete" @click="removeExtractor(extractor)"></el-button>
-              </el-button-group>
-            </el-col>
-          </el-row>
-        </div>
-        <div v-else>
-          <el-input v-model="form.extractors" type="textarea" :rows="6"></el-input>
-        </div>
-      </el-card>
+          </template>
+        </el-table-column>
+        <el-table-column prop="expression" label="表达式">
+          <template slot-scope="scope">
+            <el-input v-model="scope.row.expression"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column prop="variable" label="赋值变量名">
+          <template slot-scope="scope">
+            <el-input v-model="scope.row.variable"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-button-group>
+              <el-button type="text" icon="el-icon-plus" @click="addParam"></el-button>
+              <el-button type="text" icon="el-icon-delete" @click="removeParam(scope.row)"></el-button>
+            </el-button-group>
+          </template>
+        </el-table-column>
+      </el-table>
     </el-form>
   </div>
 </template>
