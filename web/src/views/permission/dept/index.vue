@@ -29,7 +29,7 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['permission:dept:post']"
+          v-hasPermission="['permission:dept:post']"
           type="primary"
           plain
           icon="el-icon-plus"
@@ -61,21 +61,21 @@
         </template>
       </el-table-column>
       <el-table-column
-        v-if="hasPermi(['permission:dept:{id}:put','permission:dept:post','permission:dept:{id}:delete'])"
+        v-if="hasPermission(['permission:dept:{id}:put','permission:dept:post','permission:dept:{id}:delete'])"
         label="操作"
         align="center"
         class-name="small-padding fixed-width"
       >
         <template slot-scope="scope">
           <el-button
-            v-hasPermi="['permission:dept:{id}:put']"
+            v-hasPermission="['permission:dept:{id}:put']"
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
           >修改</el-button>
           <el-button
-            v-hasPermi="['permission:dept:post']"
+            v-hasPermission="['permission:dept:post']"
             size="mini"
             type="text"
             icon="el-icon-plus"
@@ -83,7 +83,7 @@
           >新增</el-button>
           <el-button
             v-if="scope.row.parentId !== 0"
-            v-hasPermi="['permission:dept:{id}:delete']"
+            v-hasPermission="['permission:dept:{id}:delete']"
             size="mini"
             type="text"
             icon="el-icon-delete"

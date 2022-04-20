@@ -19,7 +19,7 @@ lib64/
 parts/
 sdist/
 /media/
-/logs/
+/media/logs/
 .idea/
 var/
 wheels/

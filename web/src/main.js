@@ -56,7 +56,7 @@ Vue.prototype.getCrontabData = getCrontabData;
 Vue.prototype.getIntervalData = getIntervalData;
 Vue.prototype.download = download;
 Vue.prototype.handleTree = handleTree;
-Vue.prototype.hasPermi = function(values) {
+Vue.prototype.hasPermission = function(values) {
   const permissions = store.getters && store.getters.permissions;
   return permissions.some(permission => {
     return permission === "*:*:*" || values.includes(permission);

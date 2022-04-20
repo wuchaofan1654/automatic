@@ -32,6 +32,7 @@ class Api(CoreModel):
     key_yn = models.IntegerField(default=0, choices=KEY_YN_CHOICES, verbose_name='是否核心接口')
     dept = models.ForeignKey(to='permission.Dept', on_delete=models.CASCADE, default=0, verbose_name='所属团队')
     module = models.ForeignKey(to='permission.Module', on_delete=models.CASCADE, default=0, verbose_name='关联模块')
+    status = models.IntegerField(default=1, verbose_name='状态')
     params = models.ManyToManyField(to='Param', verbose_name='关联参数')
     validators = models.ManyToManyField(to='Validator', verbose_name='关联验证器')
     extractors = models.ManyToManyField(to='Extractor', verbose_name='关联提取器')
@@ -131,3 +132,16 @@ class Report(CoreModel):
 
     def __str__(self):
         return self.name
+
+
+class Project(CoreModel):
+    name = models.CharField(default='', max_length=255, verbose_name='项目名称(unique)', unique=True)
+    apis = models.ManyToManyField(to='Api', verbose_name='接口列表')
+
+    class Meta:
+        verbose_name = '项目列表'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
+

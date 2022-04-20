@@ -55,7 +55,7 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['system:dict:type:post']"
+          v-hasPermission="['system:dict:type:post']"
           type="primary"
           plain
           icon="el-icon-plus"
@@ -65,7 +65,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['system:dict:type:{id}:put']"
+          v-hasPermission="['system:dict:type:{id}:put']"
           type="success"
           plain
           icon="el-icon-edit"
@@ -76,7 +76,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['system:dict:type:{id}:delete']"
+          v-hasPermission="['system:dict:type:{id}:delete']"
           type="danger"
           plain
           icon="el-icon-delete"
@@ -87,7 +87,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['system:dict:type:export:get']"
+          v-hasPermission="['system:dict:type:export:get']"
           type="warning"
           plain
           icon="el-icon-download"
@@ -97,7 +97,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['system:dict:type:clearcache:delete']"
+          v-hasPermission="['system:dict:type:clearcache:delete']"
           type="danger"
           plain
           icon="el-icon-refresh"
@@ -144,21 +144,21 @@
         </template>
       </el-table-column>
       <el-table-column
-        v-if="hasPermi(['system:dict:type:{id}:put','system:dict:type:{id}:delete'])"
+        v-if="hasPermission(['system:dict:type:{id}:put','system:dict:type:{id}:delete'])"
         label="操作"
         align="center"
         class-name="small-padding fixed-width"
       >
         <template slot-scope="scope">
           <el-button
-            v-hasPermi="['system:dict:type:{id}:put']"
+            v-hasPermission="['system:dict:type:{id}:put']"
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
           >修改</el-button>
           <el-button
-            v-hasPermi="['system:dict:type:{id}:delete']"
+            v-hasPermission="['system:dict:type:{id}:delete']"
             size="mini"
             type="text"
             icon="el-icon-delete"

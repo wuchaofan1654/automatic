@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 
 from apps.permission.serializers import DeptSerializer, ModuleSerializer
 from frames.serializers import CustomModelSerializer
-from apps.api.models import Api, Param, Validator, Extractor, Result, Report
+from apps.api.models import Api, Param, Validator, Extractor, Result, Report, Project
 
 UserProfile = get_user_model()
 
@@ -83,4 +83,17 @@ class ReportSerializer(CustomModelSerializer):
         model = Report
         fields = '__all__'
         depth = 1
+
+
+class ProjectSerializer(CustomModelSerializer):
+    """
+    简单测试项目序列化器
+    """
+
+    apis = ApiSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Project
+        fields = '__all__'
+        depth = 0
 

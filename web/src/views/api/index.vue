@@ -1,5 +1,5 @@
 <template> 
-  <el-card class="app-container">
+  <div class="app-container">
     <el-form v-show="showSearch" ref="queryForm" :model="queryParams" :inline="true">
       <el-form-item label="接口名称" prop="name">
         <el-input
@@ -27,8 +27,7 @@
           placeholder="请选择接口状态"
           clearable
           size="small"
-          style="width: 240px"
-        >
+          style="width: 240px">
           <el-option
             v-for="dict in statusOptions"
             :key="dict.dictValue"
@@ -58,39 +57,27 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['permission:role:post']"
+          v-hasPermission="['permission:role:post']"
           type="primary"
           plain
           icon="el-icon-plus"
           size="mini"
-          @click="handleAdd"
+          @click="jumperToDetail()"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['permission:role:{id}:put']"
-          type="success"
+          v-hasPermission="['permission:role:post']"
+          type="primary"
           plain
-          icon="el-icon-edit"
+          icon="el-icon-plus"
           size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-        >修改</el-button>
+          @click="jumperToDetail()"
+        >导入</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['permission:role:{id}:delete']"
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-        >删除</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          v-hasPermi="['permission:role:export:get']"
+          v-hasPermission="['permission:role:export:get']"
           type="warning"
           plain
           icon="el-icon-download"
@@ -101,17 +88,29 @@
       <right-toolbar :show-search.sync="showSearch" @queryTable="getList" />
     </el-row>
 
-    <el-table v-loading="loading" :data="pointList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="apis" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="编号" prop="id" width="80" />
-      <el-table-column label="名称" prop="name" :show-overflow-tooltip="true" />
-      <el-table-column label="url" prop="url" :show-overflow-tooltip="true" />
-      <el-table-column label="检查项" prop="validators" align="center" width="100" />
-      <el-table-column label="测试结果" prop="last_exe_status" align="center" width="100" sortable />
+      <el-table-column label="名称" prop="name" :show-overflow-tooltip="true" >
+        <template slot-scope="scope">
+          <el-button
+            type="text"
+            @click="jumperToDetail(scope.row.id)"
+          >{{scope.row.name}}</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column label="url" prop="url" :show-overflow-tooltip="true" >
+        <template slot-scope="scope">
+          <el-button
+            type="text"
+            @click="jumperToDetail(scope.row.id)"
+          >{{scope.row.url}}</el-button>
+        </template>
+      </el-table-column>
       <el-table-column label="状态" align="center" width="100" sortable>
         <template slot-scope="scope">
           <el-switch
-            v-model="scope.row.status.toString()"
+            v-model="scope.row.status"
             active-value="1"
             inactive-value="0"
             disabled
@@ -126,28 +125,28 @@
         </template>
       </el-table-column>
       <el-table-column
-        v-if="hasPermi(['permission:role:{id}:put', 'permission:role:{id}:delete'])"
+        v-if="hasPermission(['permission:role:{id}:put', 'permission:role:{id}:delete'])"
         label="操作"
         align="center"
         class-name="small-padding fixed-width"
       >
         <template slot-scope="scope">
           <el-button
-            v-hasPermi="['permission:role:{id}:put']"
+            v-hasPermission="['permission:role:{id}:put']"
             size="mini"
             type="text"
             icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
+            @click="jumperToDetail(scope.row.id)"
           >修改</el-button>
           <el-button
-            v-hasPermi="['permission:role:{id}:put']"
+            v-hasPermission="['permission:role:{id}:put']"
             size="mini"
             type="text"
             icon="el-icon-circle-check"
             @click="handleDataScope(scope.row)"
           >数据权限</el-button>
           <el-button
-            v-hasPermi="['permission:role:{id}:delete']"
+            v-hasPermission="['permission:role:{id}:delete']"
             size="mini"
             type="text"
             icon="el-icon-delete"
@@ -156,26 +155,28 @@
         </template>
       </el-table-column>
     </el-table>
-  </el-card>
+  </div>
 </template>
 <script>
 import {getApi} from '@/api/api/api'
 
 const defaultQueryParams = {
   name: undefined,
-  suiteId: undefined,
+  suite_id: undefined,
   creator: undefined,
   key_yn: undefined,
   status: undefined,
+  start: '',
+  end: '',
   pageNum: 1,
   pageSize: 20
 };
 
 export default {
-  name: "points",
+  name: "index",
   data() {
     return {
-      pointList: [],
+      apis: [],
       showSearch: true,
       single: true,
       // 非多个禁用
@@ -194,7 +195,7 @@ export default {
       this.loading = true;
       getApi(this.queryParams).then(response => {
         this.loading = false;
-        this.pointList = response.data.results;
+        this.apis = response.data.results;
         this.total = response.data.count
       });
     },
@@ -227,18 +228,17 @@ export default {
     handleStatusChange() {
       this.$router.push({path:'/apis/addApi'});
     },
-    handleAdd() {
-
-    },
     handleDelete() {
 
     },
-    handleUpdate() {},
-    handleDataScope(){},
-    handleExport() {},
-    handleSelectionChange(){}
-
-  }
+    jumperToDetail(apiId) {
+      if (apiId) {
+        this.$router.push({path: '/api/detail', query: {id: apiId}})
+      }else {
+        this.$router.push({path: '/api/detail'})
+      }
+    }
+  },
 }
 </script>
 <style>

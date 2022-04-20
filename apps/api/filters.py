@@ -6,7 +6,7 @@ Description: ToDo
 
 import django_filters
 
-from apps.api.models import Api, Report
+from apps.api.models import Api, Report, Project
 
 
 class ApiFilter(django_filters.FilterSet):
@@ -33,4 +33,15 @@ class ReportFilter(django_filters.FilterSet):
 
     class Meta:
         model = Report
+        fields = ('name', 'creator', 'create_datetime')
+
+
+class ProjectFilter(django_filters.FilterSet):
+    name = django_filters.CharFilter(field_name='name', lookup_expr='icontains')
+    creator = django_filters.CharFilter(field_name='creator', lookup_expr='id')
+    start = django_filters.CharFilter(field_name='create_datetime', lookup_expr='gt')
+    end = django_filters.CharFilter(field_name='create_datetime', lookup_expr='lt')
+
+    class Meta:
+        model = Project
         fields = ('name', 'creator', 'create_datetime')

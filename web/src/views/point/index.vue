@@ -51,7 +51,7 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['system:message:post']"
+          v-hasPermission="['system:message:post']"
           type="primary"
           plain
           icon="el-icon-plus"
@@ -62,7 +62,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['system:message:{id}:put']"
+          v-hasPermission="['system:message:{id}:put']"
           type="success"
           plain
           icon="el-icon-edit"
@@ -74,7 +74,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['permission:menu:{id}:delete']"
+          v-hasPermission="['permission:menu:{id}:delete']"
           type="danger"
           plain
           icon="el-icon-delete"
@@ -86,7 +86,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['system:message:export:get']"
+          v-hasPermission="['system:message:export:get']"
           type="warning"
           plain
           icon="el-icon-download"

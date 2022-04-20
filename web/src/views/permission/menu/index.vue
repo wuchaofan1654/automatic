@@ -39,7 +39,7 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['permission:menus:post']"
+          v-hasPermission="['permission:menus:post']"
           type="primary"
           plain
           icon="el-icon-plus"
@@ -81,14 +81,14 @@
         </template>
       </el-table-column>
       <el-table-column
-        v-if="hasPermi(['permission:menus:{id}:put', 'permission:menus:post', 'permission:menus:{id}:delete'])"
+        v-if="hasPermission(['permission:menus:{id}:put', 'permission:menus:post', 'permission:menus:{id}:delete'])"
         label="操作"
         align="center"
         class-name="small-padding fixed-width"
       >
         <template slot-scope="scope">
           <el-button
-            v-hasPermi="['permission:menus:{id}:put']"
+            v-hasPermission="['permission:menus:{id}:put']"
             size="mini"
             type="text"
             icon="el-icon-edit"
@@ -96,7 +96,7 @@
           >修改
           </el-button>
           <el-button
-            v-hasPermi="['permission:menus:post']"
+            v-hasPermission="['permission:menus:post']"
             size="mini"
             type="text"
             icon="el-icon-plus"
@@ -104,7 +104,7 @@
           >新增
           </el-button>
           <el-button
-            v-hasPermi="['permission:menus:{id}:delete']"
+            v-hasPermission="['permission:menus:{id}:delete']"
             size="mini"
             type="text"
             icon="el-icon-delete"

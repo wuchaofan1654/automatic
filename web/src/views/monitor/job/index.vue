@@ -39,7 +39,7 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['monitor:job:add']"
+          v-hasPermission="['monitor:job:add']"
           type="primary"
           plain
           icon="el-icon-plus"
@@ -49,7 +49,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['monitor:job:edit']"
+          v-hasPermission="['monitor:job:edit']"
           type="success"
           plain
           icon="el-icon-edit"
@@ -60,7 +60,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['monitor:job:remove']"
+          v-hasPermission="['monitor:job:remove']"
           type="danger"
           plain
           icon="el-icon-delete"
@@ -71,7 +71,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['monitor:job:export']"
+          v-hasPermission="['monitor:job:export']"
           type="warning"
           plain
           icon="el-icon-download"
@@ -81,7 +81,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['monitor:job:query']"
+          v-hasPermission="['monitor:job:query']"
           type="info"
           plain
           icon="el-icon-s-operation"
@@ -112,14 +112,14 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
-            v-hasPermi="['monitor:job:changeStatus']"
+            v-hasPermission="['monitor:job:changeStatus']"
             size="mini"
             type="text"
             icon="el-icon-caret-right"
             @click="handleRun(scope.row)"
           >执行一次</el-button>
           <el-button
-            v-hasPermi="['monitor:job:query']"
+            v-hasPermission="['monitor:job:query']"
             size="mini"
             type="text"
             icon="el-icon-view"

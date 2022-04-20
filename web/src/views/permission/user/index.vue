@@ -85,7 +85,7 @@
         <el-row :gutter="10" class="mb8">
           <el-col :span="1.5">
             <el-button
-              v-hasPermi="['permission:user:post']"
+              v-hasPermission="['permission:user:post']"
               type="primary"
               plain
               icon="el-icon-plus"
@@ -96,7 +96,7 @@
           </el-col>
           <el-col :span="1.5">
             <el-button
-              v-hasPermi="['permission:user:{id}:put']"
+              v-hasPermission="['permission:user:{id}:put']"
               type="success"
               plain
               icon="el-icon-edit"
@@ -108,7 +108,7 @@
           </el-col>
           <el-col :span="1.5">
             <el-button
-              v-hasPermi="['permission:user:{id}:delete']"
+              v-hasPermission="['permission:user:{id}:delete']"
               type="danger"
               plain
               icon="el-icon-delete"
@@ -120,7 +120,7 @@
           </el-col>
           <el-col :span="1.5">
             <el-button
-              v-hasPermi="['permission:user:import:post']"
+              v-hasPermission="['permission:user:import:post']"
               type="info"
               plain
               icon="el-icon-upload2"
@@ -131,7 +131,7 @@
           </el-col>
           <el-col :span="1.5">
             <el-button
-              v-hasPermi="['permission:user:export:get']"
+              v-hasPermission="['permission:user:export:get']"
               type="warning"
               plain
               icon="el-icon-download"
@@ -217,7 +217,7 @@
             </template>
           </el-table-column>
           <el-table-column
-            v-if="hasPermi(['permission:user:{id}:put','permission:user:{id}:delete','permission:user:resetpwd:put'])"
+            v-if="hasPermission(['permission:user:{id}:put','permission:user:{id}:delete','permission:user:resetpwd:put'])"
             label="操作"
             align="center"
             width="160"
@@ -225,7 +225,7 @@
           >
             <template slot-scope="scope">
               <el-button
-                v-hasPermi="['permission:user:{id}:put']"
+                v-hasPermission="['permission:user:{id}:put']"
                 size="mini"
                 type="text"
                 icon="el-icon-edit"
@@ -234,7 +234,7 @@
               </el-button>
               <el-button
                 v-if="scope.row.id !== 1"
-                v-hasPermi="['permission:user:{id}:delete']"
+                v-hasPermission="['permission:user:{id}:delete']"
                 size="mini"
                 type="text"
                 icon="el-icon-delete"
@@ -242,7 +242,7 @@
               >删除
               </el-button>
               <el-button
-                v-hasPermi="['permission:user:resetpwd:put']"
+                v-hasPermission="['permission:user:resetpwd:put']"
                 size="mini"
                 type="text"
                 icon="el-icon-key"

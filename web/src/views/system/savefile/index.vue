@@ -30,7 +30,7 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['system:savefile:post']"
+          v-hasPermission="['system:savefile:post']"
           type="primary"
           plain
           icon="el-icon-upload"
@@ -41,7 +41,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['system:savefile:{id}:delete']"
+          v-hasPermission="['system:savefile:{id}:delete']"
           type="danger"
           plain
           icon="el-icon-delete"
@@ -53,7 +53,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['system:clearsavefile:post']"
+          v-hasPermission="['system:clearsavefile:post']"
           type="warning"
           plain
           icon="el-icon-download"
@@ -105,7 +105,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        v-if="hasPermi(['system:clearsavefile:download:post'])"
+        v-if="hasPermission(['system:clearsavefile:download:post'])"
         label="操作"
         align="center"
         class-name="small-padding fixed-width"
@@ -113,7 +113,7 @@
       >
         <template slot-scope="scope">
           <el-button
-            v-hasPermi="['system:clearsavefile:download:post']"
+            v-hasPermission="['system:clearsavefile:download:post']"
             size="mini"
             type="text"
             icon="el-icon-download"
@@ -121,7 +121,7 @@
           >下载
           </el-button>
           <el-button
-            v-hasPermi="['system:savefile:{id}:delete']"
+            v-hasPermission="['system:savefile:{id}:delete']"
             size="mini"
             type="text"
             icon="el-icon-delete"

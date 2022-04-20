@@ -38,7 +38,7 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['system:notice:add']"
+          v-hasPermission="['system:notice:add']"
           type="primary"
           plain
           icon="el-icon-plus"
@@ -48,7 +48,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['system:notice:edit']"
+          v-hasPermission="['system:notice:edit']"
           type="success"
           plain
           icon="el-icon-edit"
@@ -59,7 +59,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['system:notice:remove']"
+          v-hasPermission="['system:notice:remove']"
           type="danger"
           plain
           icon="el-icon-delete"
@@ -103,14 +103,14 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
-            v-hasPermi="['system:notice:edit']"
+            v-hasPermission="['system:notice:edit']"
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
           >修改</el-button>
           <el-button
-            v-hasPermi="['system:notice:remove']"
+            v-hasPermission="['system:notice:remove']"
             size="mini"
             type="text"
             icon="el-icon-delete"

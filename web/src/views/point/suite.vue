@@ -1,17 +1,17 @@
 <template>
   <div class="app-container">
     <el-form v-show="showSearch" ref="queryForm" :model="queryParams" :inline="true" label-width="68px">
-      <el-form-item label="埋点集合" prop="title">
+      <el-form-item label="埋点名称" prop="title">
         <el-input
           v-model="queryParams.title"
-          placeholder="请输入集合名称"
+          placeholder="请输入名称"
           clearable
           size="small"
           style="width: 240px"
           @keyup.enter.native="handleQuery"/>
       </el-form-item>
-      <el-form-item label="部门" prop="point_type">
-        <el-select v-model="queryParams.point_type" placeholder="部门" clearable size="small">
+      <el-form-item label="埋点类型" prop="point_type">
+        <el-select v-model="queryParams.point_type" placeholder="埋点类型" clearable size="small">
           <el-option
             v-for="dict in PointTypeOptions"
             :key="dict.dictValue"
@@ -19,13 +19,28 @@
             :value="dict.dictValue"/>
         </el-select>
       </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="状态" clearable size="small">
+      <el-form-item label="埋点状态" prop="status">
+        <el-select v-model="queryParams.status" placeholder="埋点状态" clearable size="small">
           <el-option
             v-for="dict in PointStatusOptions"
             :key="dict.dictValue"
             :label="dict.dictLabel"
             :value="dict.dictValue"/>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="是否核心" prop="is_reviewed">
+        <el-select v-model="queryParams.is_reviewed" placeholder="是否核心" clearable size="small">
+          <el-option :key="true" label="是" :value="true"/>
+          <el-option :key="false" label="否" :value="false"/>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="埋点集合" prop="point_type">
+        <el-select v-model="queryParams.suite_id" placeholder="埋点集合" clearable size="small">
+          <el-option
+            v-for="suite in PointSuitesOptions"
+            :key="suite.name"
+            :label="suite.name"
+            :value="suite.id"/>
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -36,7 +51,7 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['system:message:post']"
+          v-hasPermission="['system:message:post']"
           type="primary"
           plain
           icon="el-icon-plus"
@@ -47,7 +62,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['system:message:{id}:put']"
+          v-hasPermission="['system:message:{id}:put']"
           type="success"
           plain
           icon="el-icon-edit"
@@ -59,7 +74,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['permission:menu:{id}:delete']"
+          v-hasPermission="['permission:menu:{id}:delete']"
           type="danger"
           plain
           icon="el-icon-delete"
@@ -71,7 +86,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['system:message:export:get']"
+          v-hasPermission="['system:message:export:get']"
           type="warning"
           plain
           icon="el-icon-download"
@@ -84,11 +99,11 @@
     </el-row>
     <el-table v-loading="loading" :data="configList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="名称" align="center" prop="zh_name" sortable :show-overflow-tooltip="true"/>
-      <el-table-column label="部门" align="center" prop="point_type" sortable width="120" :formatter="typeFormat"/>
-      <el-table-column label="埋点数" align="center" prop="curr_page" sortable :show-overflow-tooltip="true"/>
-      <el-table-column label="最新状态" align="center" prop="from_action" sortable :show-overflow-tooltip="true"/>
-      <el-table-column label="状态" align="center" prop="status" sortable width="100" :formatter="statusFormat"/>
+      <el-table-column label="中文名称" align="center" prop="zh_name" sortable :show-overflow-tooltip="true"/>
+      <el-table-column label="类型" align="center" prop="point_type" sortable width="120" :formatter="typeFormat"/>
+      <el-table-column label="curr_page" align="center" prop="curr_page" sortable :show-overflow-tooltip="true"/>
+      <el-table-column label="from_action" align="center" prop="from_action" sortable :show-overflow-tooltip="true"/>
+      <el-table-column label="埋点状态" align="center" prop="status" sortable width="100" :formatter="statusFormat"/>
       <el-table-column label="创建时间" align="center" prop="create_datetime" sortable width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.create_datetime) }}</span>

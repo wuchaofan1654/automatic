@@ -189,10 +189,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 日志配置
 """
 # log 配置部分BEGIN #
-SERVER_LOGS_FILE = os.path.join(BASE_DIR, 'logs', 'server.log')
-ERROR_LOGS_FILE = os.path.join(BASE_DIR, 'logs', 'error.log')
-if not os.path.exists(os.path.join(BASE_DIR, 'logs')):
-    os.makedirs(os.path.join(BASE_DIR, 'logs'))
+SERVER_LOGS_FILE = os.path.join(BASE_DIR, 'media/logs', 'server.log')
+ERROR_LOGS_FILE = os.path.join(BASE_DIR, 'media/logs', 'error.log')
+if not os.path.exists(os.path.join(BASE_DIR, 'media/logs')):
+    os.makedirs(os.path.join(BASE_DIR, 'media/logs'))
 
 # 格式:[2020-04-22 23:33:01][micoservice.apps.ready():16] [INFO] 这是一条日志:
 # 格式:[日期][模块.函数名称():行号] [级别] 信息

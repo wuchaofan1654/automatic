@@ -40,7 +40,7 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['system:config:post']"
+          v-hasPermission="['system:config:post']"
           type="primary"
           plain
           icon="el-icon-plus"
@@ -50,7 +50,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['system:config:{id}:put']"
+          v-hasPermission="['system:config:{id}:put']"
           type="success"
           plain
           icon="el-icon-edit"
@@ -61,7 +61,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['system:config:{id}:delete']"
+          v-hasPermission="['system:config:{id}:delete']"
           type="danger"
           plain
           icon="el-icon-delete"
@@ -72,7 +72,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['system:config:export:get']"
+          v-hasPermission="['system:config:export:get']"
           type="warning"
           plain
           icon="el-icon-download"
@@ -82,7 +82,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['system:config:clearcache:get']"
+          v-hasPermission="['system:config:clearcache:get']"
           type="danger"
           plain
           icon="el-icon-refresh"
@@ -108,21 +108,21 @@
         </template>
       </el-table-column>
       <el-table-column
-        v-if="hasPermi(['system:config:{id}:put','system:config:{id}:delete'])"
+        v-if="hasPermission(['system:config:{id}:put','system:config:{id}:delete'])"
         label="操作"
         align="center"
         class-name="small-padding fixed-width"
       >
         <template slot-scope="scope">
           <el-button
-            v-hasPermi="['system:config:{id}:put']"
+            v-hasPermission="['system:config:{id}:put']"
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
           >修改</el-button>
           <el-button
-            v-hasPermi="['system:config:{id}:delete']"
+            v-hasPermission="['system:config:{id}:delete']"
             size="mini"
             type="text"
             icon="el-icon-delete"

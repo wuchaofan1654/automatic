@@ -64,7 +64,7 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['monitor:job:remove']"
+          v-hasPermission="['monitor:job:remove']"
           type="danger"
           plain
           icon="el-icon-delete"
@@ -75,7 +75,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['monitor:job:remove']"
+          v-hasPermission="['monitor:job:remove']"
           type="danger"
           plain
           icon="el-icon-delete"
@@ -85,7 +85,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['monitor:job:export']"
+          v-hasPermission="['monitor:job:export']"
           type="warning"
           plain
           icon="el-icon-download"
@@ -112,7 +112,7 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
-            v-hasPermi="['monitor:job:query']"
+            v-hasPermission="['monitor:job:query']"
             size="mini"
             type="text"
             icon="el-icon-view"

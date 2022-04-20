@@ -11,11 +11,11 @@ export function checkPermi(value) {
     const permissionDatas = value;
     const all_permission = "*:*:*";
 
-    const hasPermission = permissions.some(permission => {
+    const hasPermissionssion = permissions.some(permission => {
       return all_permission === permission || permissionDatas.includes(permission);
     });
 
-    if (!hasPermission) {
+    if (!hasPermissionssion) {
       return false;
     }
     return true;

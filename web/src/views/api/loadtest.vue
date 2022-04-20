@@ -173,7 +173,7 @@
           >
             <template slot-scope="scope">
               <el-button
-                v-hasPermi="['permission:role:{id}:delete']"
+                v-hasPermission="['permission:role:{id}:delete']"
                 size="mini"
                 type="text"
                 icon="el-icon-delete"
@@ -197,7 +197,7 @@
             class-name="small-padding fixed-width">
             <template slot-scope="scope">
               <el-button
-                v-hasPermi="['permission:role:{id}:delete']"
+                v-hasPermission="['permission:role:{id}:delete']"
                 :size="configDict.size"
                 type="text"
                 icon="el-icon-delete"

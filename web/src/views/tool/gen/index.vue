@@ -40,7 +40,7 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['shortcut:gen:code']"
+          v-hasPermission="['shortcut:gen:code']"
           type="primary"
           plain
           icon="el-icon-download"
@@ -50,7 +50,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['shortcut:gen:import']"
+          v-hasPermission="['shortcut:gen:import']"
           type="info"
           plain
           icon="el-icon-upload"
@@ -60,7 +60,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['shortcut:gen:edit']"
+          v-hasPermission="['shortcut:gen:edit']"
           type="success"
           plain
           icon="el-icon-edit"
@@ -71,7 +71,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['shortcut:gen:remove']"
+          v-hasPermission="['shortcut:gen:remove']"
           type="danger"
           plain
           icon="el-icon-delete"
@@ -116,35 +116,35 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
-            v-hasPermi="['shortcut:gen:preview']"
+            v-hasPermission="['shortcut:gen:preview']"
             type="text"
             size="small"
             icon="el-icon-view"
             @click="handlePreview(scope.row)"
           >预览</el-button>
           <el-button
-            v-hasPermi="['shortcut:gen:edit']"
+            v-hasPermission="['shortcut:gen:edit']"
             type="text"
             size="small"
             icon="el-icon-edit"
             @click="handleEditTable(scope.row)"
           >编辑</el-button>
           <el-button
-            v-hasPermi="['shortcut:gen:remove']"
+            v-hasPermission="['shortcut:gen:remove']"
             type="text"
             size="small"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
           >删除</el-button>
           <el-button
-            v-hasPermi="['shortcut:gen:edit']"
+            v-hasPermission="['shortcut:gen:edit']"
             type="text"
             size="small"
             icon="el-icon-refresh"
             @click="handleSynchDb(scope.row)"
           >同步</el-button>
           <el-button
-            v-hasPermi="['shortcut:gen:code']"
+            v-hasPermission="['shortcut:gen:code']"
             type="text"
             size="small"
             icon="el-icon-download"

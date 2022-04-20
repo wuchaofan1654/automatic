@@ -59,7 +59,7 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['admin:system:login_info:{id}:delete']"
+          v-hasPermission="['admin:system:login_info:{id}:delete']"
           type="danger"
           plain
           icon="el-icon-delete"
@@ -71,7 +71,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['admin:system:login_info:clean:delete']"
+          v-hasPermission="['admin:system:login_info:clean:delete']"
           type="danger"
           plain
           icon="el-icon-delete"
@@ -82,7 +82,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['admin:system:login_info:export:get']"
+          v-hasPermission="['admin:system:login_info:export:get']"
           type="warning"
           plain
           icon="el-icon-download"
@@ -112,7 +112,7 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
-            v-hasPermi="['admin:system:login_info:get']"
+            v-hasPermission="['admin:system:login_info:get']"
             size="mini"
             type="text"
             icon="el-icon-view"

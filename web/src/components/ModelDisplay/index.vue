@@ -93,7 +93,7 @@
           <el-col v-for="(func,index) in funcs" :key="index" :span="1.5">
             <el-button
               v-if="func.type==='add'"
-              v-hasPermi="func.permis"
+              v-hasPermission="func.permis"
               type="primary"
               plain
               :icon="func.icon||'el-icon-plus'"
@@ -103,7 +103,7 @@
             </el-button>
             <el-button
               v-else-if="func.type==='update'"
-              v-hasPermi="func.permis"
+              v-hasPermission="func.permis"
               type="success"
               plain
               :disabled="multipleSelection.length!==1"
@@ -114,7 +114,7 @@
             </el-button>
             <el-button
               v-else-if="func.type==='delete'"
-              v-hasPermi="func.permis"
+              v-hasPermission="func.permis"
               type="danger"
               plain
               :disabled="multipleSelection.length===0"
@@ -125,7 +125,7 @@
             </el-button>
             <el-button
               v-else-if="func.type==='export'"
-              v-hasPermi="func.permis"
+              v-hasPermission="func.permis"
               type="warning"
               plain
               :icon="func.icon||'el-icon-download'"
@@ -135,7 +135,7 @@
             </el-button>
             <el-button
               v-else-if="func.type==='import'"
-              v-hasPermi="func.permis"
+              v-hasPermission="func.permis"
               type="info"
               plain
               :icon="func.icon||'el-icon-upload2'"
@@ -223,7 +223,7 @@
         </el-table-column>
       </template>
       <el-table-column
-        v-if="hasPermi(getOperationPermis())"
+        v-if="hasPermission(getOperationPermis())"
         label="操作"
         align="center"
         width="220"
@@ -233,7 +233,7 @@
           <span v-for="(func,index) in funcs" :key="index">
             <el-button
               v-if="func.type==='select'"
-              v-hasPermi="func.permis"
+              v-hasPermission="func.permis"
               size="mini"
               type="text"
               :icon="func.icon||'el-icon-view'"
@@ -242,7 +242,7 @@
             &nbsp;
             <el-button
               v-if="func.type==='update'"
-              v-hasPermi="func.permis"
+              v-hasPermission="func.permis"
               size="mini"
               type="text"
               :icon="func.icon||'el-icon-edit'"
@@ -251,7 +251,7 @@
             &nbsp;
             <el-button
               v-else-if="func.type==='delete'"
-              v-hasPermi="func.permis"
+              v-hasPermission="func.permis"
               size="mini"
               type="text"
               :icon="func.icon||'el-icon-delete'"

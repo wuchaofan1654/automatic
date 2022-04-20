@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 
-from .models import Api, Param, Validator, Extractor, Result, Report
+from .models import Api, Param, Validator, Extractor, Result, Report, Project
 
 
 class ApiAdmin(admin.ModelAdmin):
@@ -31,3 +31,4 @@ admin.site.register(Validator, ValidatorAdmin)
 admin.site.register(Extractor, ExtractorAdmin)
 admin.site.register(Result)
 admin.site.register(Report)
+admin.site.register(Project)

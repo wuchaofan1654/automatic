@@ -59,7 +59,7 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['admin:system:operation_log:{id}:delete']"
+          v-hasPermission="['admin:system:operation_log:{id}:delete']"
           type="danger"
           plain
           icon="el-icon-delete"
@@ -71,7 +71,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['admin:system:operation_log:clean:delete']"
+          v-hasPermission="['admin:system:operation_log:clean:delete']"
           type="danger"
           plain
           icon="el-icon-delete"
@@ -82,7 +82,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['admin:system:operlog:export:get']"
+          v-hasPermission="['admin:system:operlog:export:get']"
           type="warning"
           plain
           icon="el-icon-download"
@@ -111,7 +111,7 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
-            v-hasPermi="['admin:system:operlog:get']"
+            v-hasPermission="['admin:system:operlog:get']"
             size="mini"
             type="text"
             icon="el-icon-view"

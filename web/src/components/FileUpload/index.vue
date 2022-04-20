@@ -5,17 +5,16 @@
       :action="uploadFileUrl"
       :before-upload="handleBeforeUpload"
       :file-list="fileList"
-      :limit="1"
+      :limit="limit"
+      :multiple="multiple"
       :on-error="handleUploadError"
       :on-exceed="handleExceed"
       :on-success="handleUploadSuccess"
-      :show-file-list="false"
+      :show-file-list="show_file_list"
       :headers="headers"
       class="upload-file-uploader"
     >
-      <!-- 上传按钮 -->
       <el-button size="mini" type="primary">选取文件</el-button>
-      <!-- 上传提示 -->
       <div v-if="showTip" slot="tip" class="el-upload__tip">
         请上传
         <template v-if="fileSize"> 大小不超过 <b style="color: #f56c6c">{{ fileSize }}MB</b> </template>
@@ -24,7 +23,6 @@
       </div>
     </el-upload>
 
-    <!-- 文件列表 -->
     <transition-group class="upload-file-list el-upload-list el-upload-list--text" name="el-fade-in-linear" tag="ul">
       <li v-for="(file, index) in list" :key="file.uid" class="el-upload-list__item ele-upload-list__item-content">
         <el-link :href="file.url" :underline="false" target="_blank">
@@ -44,20 +42,28 @@ import { getToken } from "@/utils/auth";
 export default {
   name: "FileUpload",
   props: {
-    // 值
     value: [String, Object, Array],
-    // 大小限制(MB)
     fileSize: {
       type: Number,
       default: 5
     },
-    // 文件类型, 例如['png', 'jpg', 'jpeg']
     fileType: {
       type: Array,
       default: () => ["doc", "xls", "ppt", "txt", "pdf"]
     },
-    // 是否显示提示
     isShowTip: {
+      type: Boolean,
+      default: true
+    },
+    limit: {
+      type: Number,
+      default: 1
+    },
+    multiple: {
+      type: Boolean,
+      default: false
+    },
+    show_file_list: {
       type: Boolean,
       default: true
     }
@@ -130,7 +136,7 @@ export default {
     },
     // 文件个数超出
     handleExceed() {
-      this.$message.error(`只允许上传单个文件`);
+      this.$message.error('只允许上传' + this.limit + '个文件');
     },
     // 上传失败
     handleUploadError() {
