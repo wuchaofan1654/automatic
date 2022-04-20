@@ -74,7 +74,7 @@
         <el-table-column prop="value" label="参数value">
           <template slot-scope="scope">
             <el-input v-if="scope.row.type !== 5" v-model="scope.row.value"></el-input>
-            <FileUpload @input="updateParamValue"></FileUpload>
+            <FileUpload v-else @input="updateParamValue" :is-show-tip="false"></FileUpload>
           </template>
         </el-table-column>
         <el-table-column label="操作">
