@@ -57,7 +57,7 @@ INSTALLED_APPS = [
     'apps.performance',
     'apps.celery',
     'apps.monitor',
-    'apps.packageAnalyse'
+    'apps.project'
 ]
 
 MIDDLEWARE = [

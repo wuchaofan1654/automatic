@@ -97,7 +97,7 @@
       </el-col>
       <right-toolbar :show-search.sync="showSearch" @queryTable="getList"/>
     </el-row>
-    <el-table v-loading="loading" :data="configList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="configList">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="中文名称" align="center" prop="zh_name" sortable :show-overflow-tooltip="true"/>
       <el-table-column label="类型" align="center" prop="point_type" sortable width="120" :formatter="typeFormat"/>

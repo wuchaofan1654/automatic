@@ -40,6 +40,10 @@ import { getModelSelect } from "@/utils/modelSelect";
 
 import VJsoneditor from 'v-jsoneditor'
 
+import jm from 'vue-jsmind'
+
+Vue.use(jm)
+
 Vue.use(VJsoneditor)
 
 // 全局方法挂载

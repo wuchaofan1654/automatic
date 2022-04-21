@@ -17,7 +17,7 @@
           </router-link>
         </div>
 
-        <screenfull id="screenfull" class="right-menu-item hover-effect" />
+        <screen-full id="screen-full" class="right-menu-item hover-effect" />
 
         <el-tooltip content="布局大小" effect="dark" placement="bottom">
           <size-select id="size-select" class="right-menu-item hover-effect" />
@@ -28,7 +28,7 @@
         class="avatar-container right-menu-item hover-effect"
         trigger="click">
         <div class="avatar-wrapper">
-          <el-avatar :src="avatar" class="user-avatar" :size="30" fit="fill"/>
+          <el-avatar :src="avatar" class="user-avatar" :size="30" fit="scale-down"/>
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
@@ -51,7 +51,7 @@
 import { mapGetters } from "vuex";
 import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
-import Screenfull from "@/components/Screenfull";
+import ScreenFull from "@/components/Screenfull";
 import SizeSelect from "@/components/SizeSelect";
 import Search from "@/components/HeaderSearch";
 import RuoYiGit from "@/components/RuoYi/Git";
@@ -62,7 +62,7 @@ export default {
   components: {
     Breadcrumb,
     Hamburger,
-    Screenfull,
+    ScreenFull,
     SizeSelect,
     Search,
     RuoYiGit,
@@ -181,13 +181,6 @@ export default {
       .avatar-wrapper {
         margin-top: 5px;
         position: relative;
-
-        //.user-avatar {
-        //  cursor: pointer;
-        //  width: 30px;
-        //  height: 30px;
-        //  border-radius: 15px;
-        //}
 
         .el-icon-caret-bottom {
           cursor: pointer;

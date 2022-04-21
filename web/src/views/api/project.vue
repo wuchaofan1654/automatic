@@ -142,9 +142,10 @@
     </el-table>
     <el-dialog
       title="新建项目"
+      :center="true"
       :visible.sync="dialogVisible"
       width="40%">
-      <el-form ref="form" :model="form" :inline="true" label-width="80px">
+      <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="项目名称">
           <el-input v-model="form.name" placeholder="请输入项目名称" />
         </el-form-item>

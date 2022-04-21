@@ -19,7 +19,6 @@ from django.urls import re_path, include
 from django.views.static import serve
 
 from application import settings
-from frames.urls import schema_view
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -36,7 +35,8 @@ urlpatterns = [
 
     re_path(r'^permission/', include('apps.permission.urls')),
     re_path(r'^system/', include('apps.system.urls')),
-    re_path(r'^package/', include('apps.packageAnalyse.urls')),
 
     re_path(r'^drf/', include('frames.urls')),
+
+    re_path(r'^project/', include('apps.project.urls')),
 ]

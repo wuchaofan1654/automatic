@@ -28,6 +28,7 @@ class CoreModel(models.Model):
     description = DescriptionField()  # 描述
     creator = models.ForeignKey(to=settings.AUTH_USER_MODEL, related_query_name='creator_query', null=True,
                                 verbose_name='创建者', on_delete=SET_NULL, db_constraint=False)  # 创建者
+    status = models.IntegerField(default=1, verbose_name='状态')
     modifier = ModifierCharField()  # 修改者
     dept_belong_id = models.CharField(max_length=64, verbose_name="数据归属部门", null=True, blank=True)
     update_datetime = UpdateDateTimeField()  # 修改时间

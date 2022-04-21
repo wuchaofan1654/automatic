@@ -134,6 +134,7 @@ class PermissionModeMiddleware(MiddlewareMixin):
         return -10
 
     def process_view(self, request, view_func, view_args, view_kwargs):
+        # return
         # 判断环境变量中，是否为演示模式(正常可忽略此判断)
         white_list = ['/admin/logout/', '/admin/login/', '/admin/api-auth/login/']
         if os.getenv('DEMO_ENV') and request.method not in ['GET', 'OPTIONS'] and request.path not in white_list:

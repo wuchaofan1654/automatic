@@ -129,7 +129,7 @@
               v-for="(item, index) in dynamicValidateForm.csvVariables"
               :key="item.name + index"
               :prop="'csvVariables.' + index + '.value'">
-              <el-col :span="11">
+              <el-col :span="8">
                 <el-input :size="configDict.size" :value="item.name"></el-input>
               </el-col>
               <el-col :span="6">
@@ -138,7 +138,7 @@
                   action="https://jsonplaceholder.typicode.com/posts/"
                   :show-file-list="false">
                   <span v-if="item.filePath" :value="item.filePath" class="avatar" />
-                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                  <i v-else class="el-icon-plus avatar-uploader-icon">添加文件</i>
                 </el-upload>
               </el-col>
               <el-col :span="2">

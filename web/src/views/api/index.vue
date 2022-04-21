@@ -57,7 +57,7 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
-          v-hasPermission="['permission:role:post']"
+          v-hasPermission="['permission:api:post']"
           type="primary"
           plain
           icon="el-icon-plus"
@@ -67,17 +67,17 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermission="['permission:role:post']"
+          v-hasPermission="['permission:api:post']"
           type="primary"
           plain
           icon="el-icon-plus"
           size="mini"
-          @click="jumperToDetail()"
+          @click="importApi"
         >导入</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermission="['permission:role:export:get']"
+          v-hasPermission="['permission:api:export:get']"
           type="warning"
           plain
           icon="el-icon-download"
@@ -125,28 +125,21 @@
         </template>
       </el-table-column>
       <el-table-column
-        v-if="hasPermission(['permission:role:{id}:put', 'permission:role:{id}:delete'])"
+        v-if="hasPermission(['permission:api:{id}:put', 'permission:api:{id}:delete'])"
         label="操作"
         align="center"
         class-name="small-padding fixed-width"
       >
         <template slot-scope="scope">
           <el-button
-            v-hasPermission="['permission:role:{id}:put']"
+            v-hasPermission="['permission:api:{id}:put']"
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="jumperToDetail(scope.row.id)"
           >修改</el-button>
           <el-button
-            v-hasPermission="['permission:role:{id}:put']"
-            size="mini"
-            type="text"
-            icon="el-icon-circle-check"
-            @click="handleDataScope(scope.row)"
-          >数据权限</el-button>
-          <el-button
-            v-hasPermission="['permission:role:{id}:delete']"
+            v-hasPermission="['permission:api:{id}:delete']"
             size="mini"
             type="text"
             icon="el-icon-delete"
@@ -155,10 +148,28 @@
         </template>
       </el-table-column>
     </el-table>
+    <pagination
+      v-show="total>0"
+      :total="total"
+      :page.sync="queryParams.pageNum"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"
+    />
+    <el-dialog
+      title="导入接口"
+      :visible.sync="importDialogVisible"
+      width="40%">
+      <FileUpload :multiple="true" limit="20"></FileUpload>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="importDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="importDialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
 import {getApi} from '@/api/api/api'
+import FileUpload from "@/components/FileUpload/index";
 
 const defaultQueryParams = {
   name: undefined,
@@ -174,8 +185,10 @@ const defaultQueryParams = {
 
 export default {
   name: "index",
+  components: {FileUpload},
   data() {
     return {
+      total: 0,
       apis: [],
       showSearch: true,
       single: true,
@@ -185,6 +198,7 @@ export default {
       statusOptions: [],
       queryParams: Object.assign({}, defaultQueryParams),
       loading: true,
+      importDialogVisible: false
     }
   },
   created() {
@@ -216,18 +230,6 @@ export default {
       this.resetForm("queryForm");
       this.handleQuery();
     },
-    handleSizeChange(val) {
-      this.queryParams.pageNum = 1;
-      this.queryParams.pageSize = val;
-      this.getList();
-    },
-    handleCurrentChange(val) {
-      this.queryParams.pageNum = val;
-      this.getList();
-    },
-    handleStatusChange() {
-      this.$router.push({path:'/apis/addApi'});
-    },
     handleDelete() {
 
     },
@@ -237,6 +239,9 @@ export default {
       }else {
         this.$router.push({path: '/api/detail'})
       }
+    },
+    importApi() {
+      this.importDialogVisible = true
     }
   },
 }
