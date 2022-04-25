@@ -3,7 +3,7 @@ import request from "@/utils/request";
 
 export function listModule(query) {
   return request({
-    url: "/performance/module/",
+    url: "/performance/package/module/",
     method: "get",
     params: query
   });

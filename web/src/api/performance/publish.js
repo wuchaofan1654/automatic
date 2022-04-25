@@ -3,7 +3,7 @@ import request from "@/utils/request";
 // 查询埋点列表
 export function comparePublish(pk1, pk2) {
   return request({
-    url: "/performance/publish/compare/" + pk1 + "/" + pk2 + "/",
+    url: "/performance/package/publish/compare/" + pk1 + "/" + pk2 + "/",
     method: "get",
   });
 }
@@ -11,7 +11,7 @@ export function comparePublish(pk1, pk2) {
 // 查询埋点列表
 export function listPublish(query) {
   return request({
-    url: "/performance/publish/",
+    url: "/performance/package/publish/",
     method: "get",
     params: query
   });
