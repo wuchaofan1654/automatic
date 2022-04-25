@@ -7,7 +7,6 @@ import psutil
 from platform import platform
 
 from apps.monitor.models import Server, Monitor, SysFiles
-from frames.response import SuccessResponse
 from apps.system.models import ConfigSettings
 from frames.utils.decorators import BaseCeleryApp
 
@@ -74,7 +73,7 @@ def get_monitor_info():
         sys_files_obj.monitor = monitor_obj
         sys_files_obj.save()
 
-    return SuccessResponse(msg="")
+    return '采集成功'
 
 
 @BaseCeleryApp(name='apps.monitor.tasks.clean_surplus_monitor_info')
@@ -87,3 +86,5 @@ def clean_surplus_monitor_info():
     Monitor.objects.filter(
         update_datetime__lt=datetime.timedelta(days=int(config_settings_obj.configValue or 30))).delete()
     logger.info(f"成功清空{config_settings_obj.configValue}天前数据")
+
+

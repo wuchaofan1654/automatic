@@ -3,7 +3,8 @@ from frames.viewsets import CustomModelViewSet
 from .filters import PublishFilter, ModuleFilter
 from .instances import CompareResult, SingleCompareResult
 from .models import Publish, Module
-from .serializers import PublishSerializer, ModuleSerializer
+from .serializers import PublishSerializer, PublishCreateUpdateSerializer, ModuleSerializer, ModuleStatSerializer
+from .services.module import ModuleDataFitLineChart
 from .signals import sync_modules_by_publish
 
 
@@ -13,12 +14,13 @@ class PublishModelViewSet(CustomModelViewSet):
     """
     queryset = Publish.objects.all()
     serializer_class = PublishSerializer
-    update_serializer_class = PublishSerializer
+    create_serializer_class = PublishCreateUpdateSerializer
+    update_serializer_class = PublishCreateUpdateSerializer
     filter_class = PublishFilter
     ordering = '-create_datetime'  # 默认排序
 
     @classmethod
-    def compare_by_pk(cls, request, *args, **kwargs):
+    def compareByPk(cls, request, *args, **kwargs):
         try:
             pk1 = kwargs.get('pk1')
             pk2 = kwargs.get('pk2')
@@ -51,13 +53,13 @@ class PublishModelViewSet(CustomModelViewSet):
             return ErrorResponse(code=201, msg=f'{err}')
 
     @classmethod
-    def get_build_options(cls, request):
+    def buildOptions(cls, request):
         query_sets = Publish.objects.all()
         query_sets = [{'id': query.id, 'version': query.version} for query in query_sets]
         return SuccessResponse(query_sets)
 
     @classmethod
-    def sync_modules(cls, request, pk):
+    def syncModules(cls, request, pk):
         try:
             publish = Publish.objects.get(pk=pk)
             sync_modules_by_publish(publish)
@@ -77,7 +79,7 @@ class ModuleModelViewSet(CustomModelViewSet):
     ordering = '-create_datetime'  # 默认排序
 
     @classmethod
-    def get_module_options(cls, request):
+    def nameOptions(cls, request):
         queryset = Module.objects.all()
         result = {}
         for query in queryset:
@@ -89,3 +91,16 @@ class ModuleModelViewSet(CustomModelViewSet):
         results = [{"id": res.id, "name": res.module_name} for res in result.values()]
 
         return SuccessResponse(results)
+
+    @classmethod
+    def moduleStat(cls, request):
+        queryset = Module.objects.all()
+        module_name_set = list(set([query['module_name'] for query in queryset.values('module_name')][:20]))
+
+        results = {
+            module_name:
+                {r['publish']['version']: r.get('module_size', 0)
+                 for r in ModuleStatSerializer(queryset.filter(module_name=module_name), many=True).data}
+            for module_name in module_name_set}
+
+        return SuccessResponse(ModuleDataFitLineChart(results).result)

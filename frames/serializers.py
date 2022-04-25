@@ -102,6 +102,3 @@ class CustomModelSerializer(ModelSerializer):
                 fields.pop(field, None)
 
         return fields
-
-
-

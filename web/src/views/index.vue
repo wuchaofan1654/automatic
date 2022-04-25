@@ -1,25 +1,32 @@
 <template>
   <div class="app-container home">
-    <panel-group @handleSetLineChartData="handleSetLineChartData" />
+    <panel-group @handleSetLineChartData="handleSetLineChartData"/>
     <el-row :gutter="32">
       <el-col :xs="24" :sm="24" :lg="6">
         <div class="chart-wrapper">
-          <raddar-chart />
+          <raddar-chart/>
         </div>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="6">
         <div class="chart-wrapper">
-          <pie-chart />
+          <pie-chart/>
         </div>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="6">
         <div class="chart-wrapper">
-          <bar-chart />
+          <bar-chart/>
         </div>
       </el-col>
-      <el-col :xs="24" :sm="24" :lg="6">
+      <el-col :xs="24" :sm="24" :lg="24">
         <div class="chart-wrapper">
-          <line-chart :chart-data="lineChartData" />
+          <line-chart
+            height="500px"
+            :x-axis="['8.41.0', '8.42.0', '8.43.0', '8.44.0', '8.45.0', '8.46.0']"
+            :y-axis="{
+              A: [-4, 2, 100, -4, 2, 36],
+              B: [56,16, -29, 47, 2, -24]
+            }"
+          />
         </div>
       </el-col>
     </el-row>
@@ -74,28 +81,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .dashboard-editor-container {
-    padding: 32px;
-    background-color: rgb(240, 242, 245);
-    position: relative;
+.dashboard-editor-container {
+  padding: 32px;
+  background-color: rgb(240, 242, 245);
+  position: relative;
 
-    .github-corner {
-      position: absolute;
-      top: 0px;
-      border: 0;
-      right: 0;
-    }
-
-    .chart-wrapper {
-      background: #fff;
-      padding: 16px 16px 0;
-      margin-bottom: 32px;
-    }
+  .github-corner {
+    position: absolute;
+    top: 0;
+    border: 0;
+    right: 0;
   }
 
-  @media (max-width: 1024px) {
-    .chart-wrapper {
-      padding: 8px;
-    }
+  .chart-wrapper {
+    background: #fff;
+    padding: 16px 16px 0;
+    margin-bottom: 32px;
   }
+}
+
+@media (max-width: 1024px) {
+  .chart-wrapper {
+    padding: 8px;
+  }
+}
 </style>

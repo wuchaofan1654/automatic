@@ -7,4 +7,8 @@ from frames.models import BaseModel
 
 
 class Loadtest(BaseModel):
-    pass
+    apis = ''
+    report = ''
+    start_datetime = ''
+    end_datetime = ''
+

@@ -4,7 +4,19 @@ from django.db import models
 from django.db.models import SET_NULL
 
 from application import settings
-from frames.models import CoreModel
+from frames.models import CoreModel, BaseModel
+
+
+class Version(BaseModel):
+    name = models.CharField(verbose_name='版本名称', max_length=50, default='')
+
+    class Meta:
+        verbose_name = '发布版本表'
+        verbose_name_plural = verbose_name
+        ordering = ['-id']
+
+    def __str__(self):
+        return f'{self.name}'
 
 
 class Publish(CoreModel):
@@ -17,7 +29,6 @@ class Publish(CoreModel):
         verbose_name = '发布记录表'
         verbose_name_plural = '发布记录表'
         ordering = ['-id']
-        unique_together = [['version', 'build_no', 'status']]
 
     def __str__(self):
         return f'{self.version}-{self.build_no}【{self.branch}】'

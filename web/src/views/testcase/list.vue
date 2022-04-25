@@ -1,20 +1,19 @@
 <template>
   <div>
-    <editor height="300" />
+    <el-button @click="updateNodeName">保存</el-button>
     <mindmap
-    v-model="data"
-    style="min-height: 600px"
-    :strokeWidth="1"/>
+      v-model="data"
+      style="min-height: 650px"
+      :strokeWidth="1"/>
   </div>
 
 </template>
 
 <script>
 import mindmap from '@hellowuxin/mindmap'
-import Editor from "@/components/Editor/index";
 
 export default {
-  components: {Editor, mindmap },
+  components: { mindmap },
   data: () => ({
     data: [{
       "name":"如何学习D3",
@@ -32,19 +31,7 @@ export default {
             { "name":"JavaScript" },
             { "name":"JavaScript" },
             { "name":"JavaScript" },
-            { "name":"JavaScript" },
-            { "name":"JavaScript" },
-            { "name":"JavaScript" },
-            { "name":"HTML & CSS" },
-            { "name":"JavaScript" },
-            { "name":"HTML & CSS" },
-            { "name":"JavaScript" },
-            { "name":"HTML & CSS" },
-            { "name":"JavaScript" },
-            { "name":"HTML & CSS" },
-            { "name":"JavaScript" },
-            { "name":"HTML & CSS" },
-            { "name":"JavaScript" },
+            { "name":"JavaScript" }
           ]
         },
         {
@@ -59,6 +46,11 @@ export default {
         },
       ]
     }]
-  })
+  }),
+  methods: {
+    updateNodeName() {
+      console.log(this.data)
+    }
+  }
 }
 </script>

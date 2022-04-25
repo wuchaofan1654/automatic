@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import uuid
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import datetime
@@ -19,6 +20,7 @@ from application.env import *
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+MAC_ADDRESS = uuid.UUID(int=uuid.getnode()).hex[-12:].upper()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -57,7 +59,6 @@ INSTALLED_APPS = [
     'apps.performance',
     'apps.celery',
     'apps.monitor',
-    'apps.project'
 ]
 
 MIDDLEWARE = [
@@ -108,7 +109,7 @@ ASGI_APPLICATION = 'application.routing.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'prod.sqlite3'),
     }
 }
 
@@ -291,7 +292,8 @@ else:
     }
 
 # redis 缓存
-REDIS_URL = f'redis://:{REDIS_PASSWORD if REDIS_PASSWORD else ""}@{os.getenv("REDIS_HOST") or REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}'
+REDIS_URL = f'redis://:{REDIS_PASSWORD if REDIS_PASSWORD else ""}@{os.getenv("REDIS_HOST") or REDIS_HOST}' \
+            f':{REDIS_PORT}/{REDIS_DB}'
 # 是否启用redis
 if locals().get("REDIS_ENABLE", True):
     CACHES = {
@@ -308,7 +310,7 @@ if locals().get("REDIS_ENABLE", True):
 # ================================================= #
 JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=60 * 60 * 24),  # JWT有效时间24小时
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=60 * 60 * 24 * 7),  # JWT有效时间7天
     'JWT_AUTH_HEADER_PREFIX': 'Bearer',  # JWT的Header认证头以'JWT '开始
     'JWT_AUTH_COOKIE': 'AUTH_JWT',
     'JWT_VERIFY_EXPIRATION': True,
@@ -330,7 +332,6 @@ REST_FRAMEWORK = {
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-
     ),
 
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.AutoSchema',
@@ -366,7 +367,6 @@ CAPTCHA_NOISE_FUNCTIONS = (
     # 'captcha.helpers.noise_arcs', # 线
     # 'captcha.helpers.noise_dots', # 点
 )
-# CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.random_char_challenge'
 CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
 
 API_LOG_ENABLE = True
@@ -382,4 +382,3 @@ CELERYBEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'  # Back
 INTERFACE_PERMISSION = locals().get("INTERFACE_PERMISSION", False)
 DJANGO_CELERY_BEAT_TZ_AWARE = False
 CELERY_TIMEZONE = 'Asia/Shanghai'  # celery 时区问题
-

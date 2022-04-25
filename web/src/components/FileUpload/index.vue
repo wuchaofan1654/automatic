@@ -15,12 +15,12 @@
       class="upload-file-uploader"
     >
       <el-button size="mini" type="primary">选取文件</el-button>
-      <div v-if="showTip" slot="tip" class="el-upload__tip">
+      <span v-if="showTip" slot="tip" class="el-upload__tip">
         请上传
         <template v-if="fileSize"> 大小不超过 <b style="color: #f56c6c">{{ fileSize }}MB</b> </template>
         <template v-if="fileType"> 格式为 <b style="color: #f56c6c">{{ fileType.join("/") }}</b> </template>
         的文件
-      </div>
+      </span>
     </el-upload>
 
     <transition-group class="upload-file-list el-upload-list el-upload-list--text" name="el-fade-in-linear" tag="ul">
@@ -49,7 +49,7 @@ export default {
     },
     fileType: {
       type: Array,
-      default: () => ["doc", "xls", "ppt", "txt", "pdf"]
+      default: () => ["json", "txt", "xls", "hav", "pdf"]
     },
     isShowTip: {
       type: Boolean,

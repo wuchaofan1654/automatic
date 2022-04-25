@@ -15,6 +15,18 @@ class PublishSerializer(ModelSerializer):
         fields = '__all__'
 
 
+class PublishCreateUpdateSerializer(ModelSerializer):
+    """
+    发布记录管理 创建/更新时的列化器
+    """
+    def validate(self, attrs: dict):
+        return super().validate(attrs)
+
+    class Meta:
+        model = Publish
+        fields = '__all__'
+
+
 class ModuleSerializer(ModelSerializer):
     """
     简单模块序列化器
@@ -25,6 +37,17 @@ class ModuleSerializer(ModelSerializer):
     class Meta:
         model = Module
         fields = '__all__'
+
+
+class ModuleStatSerializer(ModelSerializer):
+    """
+    简单模块序列化器
+    """
+    publish = PublishSerializer(read_only=True)
+
+    class Meta:
+        model = Module
+        fields = ('publish', 'module_size')
 
 
 

@@ -23,7 +23,6 @@ from application import settings
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     re_path(r'media/(?P<path>.*)', serve, {"document_root": settings.MEDIA_ROOT}),
-
     re_path(r'^api/', include('apps.api.urls')),
     re_path(r'^point/', include('apps.point.urls')),
     re_path(r'^shortcut/', include('apps.shortcut.urls')),
@@ -32,11 +31,7 @@ urlpatterns = [
     re_path(r'^performance/', include('apps.performance.urls')),
     re_path(r'^celery/', include('apps.celery.urls')),
     re_path(r'^monitor/', include('apps.monitor.urls')),
-
     re_path(r'^permission/', include('apps.permission.urls')),
     re_path(r'^system/', include('apps.system.urls')),
-
     re_path(r'^drf/', include('frames.urls')),
-
-    re_path(r'^project/', include('apps.project.urls')),
 ]
