@@ -14,142 +14,78 @@
               添加slave
             </el-button>
           </div>
-            <el-row :gutter="22">
-              <el-col :span="8">
-                  <el-input value="127.0.0.1" :size="configDict.size" style="width: 70%; margin-right: 5px">
-                    <div slot="prepend">
-                      <span>master</span>
-                    </div>
-                  </el-input>
-                  <el-input
-                    :value="configDict.port"
-                    :size="configDict.size"
-                    placeholder="端口"
-                    style="width: 25%">
-                    <div slot="append">
-                      <el-button icon="el-icon-plus" @click.prevent="addSlave(slave)" />
-                    </div>
-                  </el-input>
-              </el-col>
-                <el-col :span="4">
-                  <el-input value="500" :size="configDict.size">
-                    <div slot="prepend">
-                      <span>max_wait</span>
-                    </div>
-                    <div slot="append">
-                      <span>ms</span>
-                    </div>
-                  </el-input>
-                </el-col>
-                <el-col :span="4">
-                  <el-input value="100" :size="configDict.size">
-                    <div slot="prepend">
-                      <span>min_wait</span>
-                    </div>
-                    <div slot="append">
-                      <span>ms</span>
-                    </div>
-                  </el-input>
-                </el-col>
-              <el-col
-                :span="8"
-                v-for="(slave, index) in dynamicValidateForm.slaves">
-                <div style="margin-top: 10px">
-                    <el-input
-                      style="width: 70%; margin-right: 5px"
-                      :value="slave.value"
-                      placeholder="请输入IP"
-                      :size="configDict.size">
-                      <div slot="prepend">
-                        <span>slave{{ index + 1 }}</span>
-                      </div>
-                    </el-input>
-                    <el-input
-                      :value="slave.port"
-                      :size="configDict.size"
-                      placeholder="端口"
-                      style="width: 25%">
-                      <div slot="append">
-                        <el-button icon="el-icon-delete" @click.prevent="removeSlave(slave)"/>
-                      </div>
-                    </el-input>
-                </div>
-              </el-col>
-            </el-row>
+          <el-table :data="serverList">
+            <el-table-column label="ip地址" prop="ip" align="center"></el-table-column>
+            <el-table-column label="端口号" prop="port" align="center"></el-table-column>
+            <el-table-column label="master/slave" prop="type" align="center"></el-table-column>
+            <el-table-column label="操作" align="center">
+              <template slot-scope="scope">
+                <el-button type="text" icon='el-icon-plus' @click="addSlave"></el-button>
+                <el-button type="text" icon='el-icon-delete' @click="removeSlave"></el-button>
+              </template>
+            </el-table-column>
+          </el-table>
         </el-card>
-        <el-card class="config-boxed-card">
+          <el-card class="config-boxed-card">
           <div slot="header">
-            <span><i class="el-icon-menu"></i> 全局变量配置</span>
-            <el-button :size="configDict.size" icon="el-icon-plus" type="text" @click="addGlobalVariable" />
+            <span><i class="el-icon-setting"></i> 全局变量配置</span>
+            <el-button
+              :size="configDict.size"
+              icon="el-icon-edit"
+              type="success"
+              style="float: right; margin: 0 20px 10px 0"
+              @click="addSlave">
+              添加slave
+            </el-button>
           </div>
-          <div class="variable-config">
-            <el-row class="variable-config-header">
-              <el-col class="variable-config-header-title" :span="6">变量名称</el-col>
-              <el-col class="variable-config-header-title" :span="3">类型</el-col>
-              <el-col class="variable-config-header-title" :span="8">值（value)</el-col>
-            </el-row>
-            <el-row
-              class="variable-config-body"
-              :gutter="22"
-              v-for="(item, index) in dynamicValidateForm.globalVariables"
-              :key="item.name"
-              :prop="'globalVariables.' + index + '.value'">
-              <el-col :span="6">
-                <el-input :size="configDict.size"></el-input>
-              </el-col>
-              <el-col :span="3">
-                <el-select :size="configDict.size" v-model="item.type" placeholder="请选择">
-                  <el-option key="1" label="string" value="string"/>
-                  <el-option key="2" label="int" value="int"/>
-                  <el-option key="3" label="file" value="file"/>
-                </el-select>
-              </el-col>
-              <el-col :span="8">
-                <el-input :size="configDict.size" :value="item.value"></el-input>
-              </el-col>
-              <el-col :span="2">
-                <el-button :size="configDict.size" icon="el-icon-delete" @click="removeGlobalVariable(item)" />
-              </el-col>
-            </el-row>
-          </div>
-        </el-card>
-        <el-card class="config-boxed-card">
+          <el-table :data="globalVariableList">
+            <el-table-column label="参数名" prop="name" align="center"></el-table-column>
+            <el-table-column label="参数类型" prop="type" align="center"></el-table-column>
+            <el-table-column label="参数值" align="center">
+              <template slot-scope="scope">
+                <el-input v-model="scope.row.value"></el-input>
+              </template>
+            </el-table-column>
+            <el-table-column label="操作" align="center">
+              <template slot-scope="scope">
+                <el-button type="text" icon='el-icon-plus' @click="addGlobalVariable"></el-button>
+                <el-button type="text" icon='el-icon-delete' @click="removeGlobalVariable"></el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+          </el-card>
+          <el-card class="config-boxed-card">
           <div slot="header">
-            <span><i class="el-icon-coin"></i> csv变量配置</span>
-            <el-button :size="configDict.size" icon="el-icon-plus" type="text" @click="addCsvVariable" />
+            <span><i class="el-icon-document"></i> 文件变量配置</span>
+            <el-button
+              :size="configDict.size"
+              icon="el-icon-edit"
+              type="success"
+              style="float: right; margin: 0 20px 10px 0"
+              @click="addSlave">
+              添加slave
+            </el-button>
           </div>
-          <div class="variable-config">
-            <el-row class="variable-config-header">
-              <el-col class="variable-config-header-title" :span="11">变量列表</el-col>
-              <el-col class="variable-config-header-title" :span="6">文件路径</el-col>
-            </el-row>
-            <el-row
-              class="variable-config-body"
-              :gutter="22"
-              v-for="(item, index) in dynamicValidateForm.csvVariables"
-              :key="item.name + index"
-              :prop="'csvVariables.' + index + '.value'">
-              <el-col :span="8">
-                <el-input :size="configDict.size" :value="item.name"></el-input>
-              </el-col>
-              <el-col :span="6">
-                <el-upload
-                  :on-success="handleAvatarSuccess"
-                  action="https://jsonplaceholder.typicode.com/posts/"
-                  :show-file-list="false">
-                  <span v-if="item.filePath" :value="item.filePath" class="avatar" />
-                  <i v-else class="el-icon-plus avatar-uploader-icon">添加文件</i>
-                </el-upload>
-              </el-col>
-              <el-col :span="2">
-                <el-button :size="configDict.size" icon="el-icon-delete" @click="removeCsvVariable(item)" />
-              </el-col>
-            </el-row>
-          </div>
+          <el-table :data="csvVariableList">
+            <el-table-column label="ip地址" prop="ip" align="center"></el-table-column>
+            <el-table-column label="端口号" prop="port" align="center"></el-table-column>
+            <el-table-column label="master/slave" prop="type" align="center"></el-table-column>
+            <el-table-column label="操作" align="center">
+              <template slot-scope="scope">
+                <el-button type="text" icon='el-icon-plus' @click="addSlave"></el-button>
+                <el-button type="text" icon='el-icon-delete' @click="removeSlave"></el-button>
+              </template>
+            </el-table-column>
+          </el-table>
         </el-card>
       </el-tab-pane>
       <el-tab-pane label="接口管理" name="second">
-        <el-table v-loading="configDict.loading" :data="apiList" @selection-change="handleSelectionChange">
+        <el-card class="box-card">
+          <div slot="header">
+            <span>接口列表</span>
+            <el-button @click="transferVisible=true">添加接口</el-button>
+          </div>
+          <el-table v-loading="configDict.loading" :data="apiList" @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="55" align="center"/>
           <el-table-column label="编号" prop="id" width="80"/>
           <el-table-column label="接口名称" prop="name" :show-overflow-tooltip="true"/>
@@ -183,8 +119,14 @@
             </template>
           </el-table-column>
         </el-table>
+        </el-card>
       </el-tab-pane>
-      <el-tab-pane label="报告管理" name="third">
+      <el-tab-pane label="运行监控" name="third">
+        <div>
+          <el-link href="http://baidu.com">外部链接</el-link>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="报告管理" name="forth">
         <el-table v-loading="configDict.loading" :data="reportList" @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="55" align="center"/>
           <el-table-column label="编号" prop="id" width="80"/>
@@ -209,6 +151,21 @@
         </el-table>
       </el-tab-pane>
     </el-tabs>
+    <el-dialog
+      title="选择添加的接口"
+      :visible="transferVisible"
+    >
+    <el-transfer
+      v-model="value"
+      filterable
+      :titles="['全部接口列表', '已选择接口']"
+      :props="{key: 'id', label: 'name'}"
+      :data="apiList" />
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="transferVisible=false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible=false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -232,28 +189,19 @@ export default {
   name: "index",
   data() {
     return {
+      html: '',
+      value: '',
+      transferVisible: false,
       activeName: 'first',
-      dynamicValidateForm: {
-        slaves: [
-          {
-            key: '',
-            value: ''
-          }
-        ],
-        globalVariables: [
-          {
-            name: '',
-            type: '',
-            value: ''
-          }
-        ],
-        csvVariables: [
-          {
-            name: '',
-            filePath: '',
-          }
-        ]
-      },
+      serverList: [
+        {type: 'master', ip: '', port: ''}
+      ],
+      globalVariableList: [
+        {name: '', type: '', value: ''}
+      ],
+      csvVariableList: [
+        {name: '', filePath: ''}
+      ],
       apiList: [],
       reportList: [],
       queryParams: Object.assign({}, defaultQueryParams),
@@ -263,10 +211,13 @@ export default {
   created() {
     this.getList();
   },
+  mounted() {
+    this.load()
+  },
   methods: {
     handleAvatarSuccess(res, file) {
-        this.dynamicValidateForm.csvVariables[0].filePath = file.name;
-      },
+      this.dynamicValidateForm.csvVariables[0].filePath = file.name;
+    },
     getList() {
       this.loading = true;
       getApi(this.queryParams).then(response => {
@@ -352,7 +303,7 @@ export default {
           name: '',
           type: '',
           value: ''
-      });
+        });
     },
     removeGlobalVariable(item) {
       let index = this.dynamicValidateForm.globalVariables.indexOf(item)
@@ -376,6 +327,9 @@ export default {
     },
     uploadSucceed(response, file, fileList) {
       console.log(this.dynamicValidateForm.csvVariables)
+    },
+    load() {
+      this.html = '<el-input>1234567</el-input>'
     }
   }
 }

@@ -1,101 +1,55 @@
 <template>
-  <div class="app-container home">
-    <panel-group @handleSetLineChartData="handleSetLineChartData" />
-    <el-row :gutter="32">
-      <el-col :xs="24" :sm="24" :lg="6">
-        <div class="chart-wrapper">
-          <raddar-chart />
-        </div>
-      </el-col>
-      <el-col :xs="24" :sm="24" :lg="6">
-        <div class="chart-wrapper">
-          <pie-chart />
-        </div>
-      </el-col>
-      <el-col :xs="24" :sm="24" :lg="6">
-        <div class="chart-wrapper">
-          <bar-chart />
-        </div>
-      </el-col>
-      <el-col :xs="24" :sm="24" :lg="6">
-        <div class="chart-wrapper">
-          <line-chart :chart-data="lineChartData" />
-        </div>
-      </el-col>
-    </el-row>
+  <div class="app-container">
+    <el-col :span="6" v-for="item in [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]">
+      <el-link
+        :underline="false"
+        @click="$message.error('00000000')"
+      >
+        <el-card class="demo-card" shadow="hover">
+          <div slot="header">
+            <span class="title">
+              <i class="el-icon-video-play"></i>
+              根据用户名称查找用户所有视频帖子根据用户名称查找用户所有视频帖子
+            </span>
+          </div>
+          <p class="desc">小字体小字体小字体小字体小字体小字体小字体小字体小字体小字体小字体小字体小字体小字体小字体小字体小字体小字体小字体小字体小字体小字体小字体小字体小字体小字体小字体小字体小字体小字体</p>
+        </el-card>
+      </el-link>
+    </el-col>
+    <el-table></el-table>
   </div>
 </template>
 
 <script>
-import PanelGroup from '../dashboard/PanelGroup';
-import LineChart from "../dashboard/LineChart";
-import RaddarChart from "../dashboard/RaddarChart";
-import PieChart from "../dashboard/PieChart";
-import BarChart from "../dashboard/BarChart";
-
-const lineChartData = {
-  newVisitis: {
-    expectedData: [100, 120, 161, 134, 105, 160, 165],
-    actualData: [120, 82, 91, 154, 162, 140, 145]
-  },
-  messages: {
-    expectedData: [200, 192, 120, 144, 160, 130, 140],
-    actualData: [180, 160, 151, 106, 145, 150, 130]
-  },
-  purchases: {
-    expectedData: [80, 100, 121, 104, 105, 90, 100],
-    actualData: [120, 90, 100, 138, 142, 130, 130]
-  },
-  shoppings: {
-    expectedData: [130, 140, 141, 142, 145, 150, 160],
-    actualData: [120, 82, 91, 154, 162, 140, 130]
-  }
-};
-export default {
-  name: "DashboardAdmin",
-  components: {
-    PanelGroup,
-    LineChart,
-    RaddarChart,
-    PieChart,
-    BarChart
-  },
-  data() {
-    return {
-      lineChartData: lineChartData.newVisitis
-    };
-  },
-  methods: {
-    handleSetLineChartData(type) {
-      this.lineChartData = lineChartData[type];
-    }
-  }
-};
 </script>
-
 <style lang="scss" scoped>
-  .dashboard-editor-container {
-    padding: 32px;
-    background-color: rgb(240, 242, 245);
-    position: relative;
+.app-container{
+  margin: 5px;
 
-    .github-corner {
-      position: absolute;
-      top: 0px;
-      border: 0;
-      right: 0;
-    }
-
-    .chart-wrapper {
-      background: #fff;
-      padding: 16px 16px 0;
-      margin-bottom: 32px;
-    }
+  p {
+    font-size: 18px;
+    color: #606266;
   }
 
-  @media (max-width: 1024px) {
-    .chart-wrapper {
-      padding: 8px;
+  .demo-card {
+    margin: 2px;
+
+    .title {
+      font-size: 16px;
+      color: #409EFF;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+    }
+
+    .desc {
+      font-size: 12px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
     }
   }
+}
 </style>

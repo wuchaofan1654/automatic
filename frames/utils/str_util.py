@@ -31,6 +31,9 @@ class Colored:
 
         return content
 
+if __name__ == '__main__':
+    def test():
+        print(Colored(content='it is sandy!', color='SUCCESS', bold=True, underline=False))
+        print("is is ")
 
-print(Colored(content='it is sandy!', color='SUCCESS', bold=True, underline=False))
-print("is is ")
+    test()

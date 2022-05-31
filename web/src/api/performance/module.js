@@ -11,7 +11,7 @@ export function listModule(query) {
 
 export function get_module_options() {
   return request({
-    url: "/performance/module/moduleOptions/",
+    url: "/performance/module/options/name",
     method: "get",
   });
 }

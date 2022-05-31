@@ -9,6 +9,7 @@ from frames.models import CoreModel, BaseModel
 
 class Version(BaseModel):
     name = models.CharField(verbose_name='版本名称', max_length=50, default='')
+    sys = models.IntegerField(verbose_name='系统', default=1, choices=((1, 'iOS'), (2, 'Android')))
 
     class Meta:
         verbose_name = '发布版本表'
@@ -20,7 +21,7 @@ class Version(BaseModel):
 
 
 class Publish(CoreModel):
-    version = models.CharField(default='', max_length=50)
+    version = models.ForeignKey(to='Version', on_delete=models.CASCADE)
     build_no = models.CharField(default='', max_length=50)
     branch = models.CharField(default='', max_length=255)
     filepath = models.CharField(default='', max_length=255)

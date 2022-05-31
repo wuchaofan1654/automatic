@@ -82,7 +82,7 @@ def export_excel(field_data: list, data: list, FileName: str, file_path: str = s
             width = col_width[i] if col_width[i] < 36 else 36
             sheet.col(i).width = 256 * (width + 6)
         else:
-            sheet.col(i).width = 256 * (default_width)
+            sheet.col(i).width = 256 * default_width
 
     row = 1
     # 内容背景颜色
@@ -128,27 +128,25 @@ def export_excel_save_model(request, field_data, data, FilName):
     # 存入文件数据库中
     FilName = '.'.join(FilName.split('.')[:-1]) + str(time_stamp) + '.' + FilName.split('.')[-1]
     file_rul = export_excel(field_data=field_data, data=data, FileName=FilName)
-    savefile, _ = SaveFile.objects.get_or_create(file=file_rul)
-    if _ == True:
-        savefile.name = FilName
-        savefile.type = 'application/vnd.ms-excel'
-        savefile.size = os.path.getsize(os.path.join(settings.MEDIA_ROOT, file_rul))
-        savefile.address = '本地存储'
-        savefile.source = '导出'
-        savefile.creator = request.user
-        savefile.dept_belong_id = getattr(request.user, 'dept_id', None)
-    savefile.modifier = request.user.username
-    savefile.save()
-    return SaveFileSerializer(savefile).data
+    save_file, _ = SaveFile.objects.get_or_create(file=file_rul)
+    if _:
+        save_file.name = FilName
+        save_file.type = 'application/vnd.ms-excel'
+        save_file.size = os.path.getsize(os.path.join(settings.MEDIA_ROOT, file_rul))
+        save_file.address = '本地存储'
+        save_file.source = '导出'
+        save_file.creator = request.user
+        save_file.dept_belong_id = getattr(request.user, 'dept_id', None)
+    save_file.modifier = request.user.username
+    save_file.save()
+    return SaveFileSerializer(save_file).data
 
 
 def excel_to_data(file_url, field_data):
     """
     读取导入的excel文件
-    :param request:
+    :param file_url:
     :param field_data: 首行数据源
-    :param data: 数据源
-    :param FilName: 文件名
     :return:
     """
     # 读取excel 文件

@@ -21,7 +21,7 @@ export function listPublish(query) {
 // 查询版本列表
 export function listBuildNo(query) {
   return request({
-    url: "/performance/publish/builds/",
+    url: "/performance/publish/options/build",
     method: "get",
     params: query
   });

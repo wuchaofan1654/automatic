@@ -5,8 +5,10 @@ Description: ToDo
 """
 
 
-# from django.urls import re_path, include
+from django.urls import re_path
 
+from apps.shortcut.views import ShortcutModelViewSet
 
 urlpatterns = [
+    re_path(r'result', ShortcutModelViewSet.as_view({'post': 'get_result'}))
 ]

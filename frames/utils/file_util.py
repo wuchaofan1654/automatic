@@ -44,5 +44,5 @@ def delete_files(delete_list: list):
     for file_path in delete_list:
         try:
             os.remove(file_path)
-        except(FileNotFoundError):
+        except(FileNotFoundError,):
             pass

@@ -185,7 +185,7 @@ const defaultQueryParams = {
 
 export default {
   name: "index",
-  components: {FileUpload},
+  components: {Result, FileUpload},
   data() {
     return {
       total: 0,

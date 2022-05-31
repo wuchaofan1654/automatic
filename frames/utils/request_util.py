@@ -28,7 +28,7 @@ def get_request_user(request, authenticate=True):
     if user and user.is_authenticated:
         return user
     try:
-        user, tokrn = OpAuthJwtAuthentication().authenticate(request)
+        user, token = OpAuthJwtAuthentication().authenticate(request)
     except Exception as e:
         pass
     return user or AnonymousUser()

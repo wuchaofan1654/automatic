@@ -197,11 +197,6 @@ export default {
   padding-left: 20px;
 }
 
-.img-banner {
-  width: 100%;
-  height: 100%;
-}
-
 .el-carousel__item h3 {
   color: #475669;
   font-size: 14px;
